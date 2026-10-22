@@ -64,8 +64,9 @@
                 </button>
 
                 <div id="user-info-bar" class="hidden flex items-center space-x-3 pl-3 sm:pl-4 border-l border-slate-200 dark:border-slate-800">
-                    <div class="text-right hidden sm:block">
-                        <div id="user-display-name" class="text-sm font-semibold text-slate-800 dark:text-slate-200"></div>
+                    <!-- Klikalny blok profilu użytkownika -->
+                    <div id="user-profile-trigger" onclick="openUserInfoModal()" class="text-right hidden sm:block cursor-pointer group" title="Kliknij, aby zobaczyć informacje o koncie i zmienić hasło">
+                        <div id="user-display-name" class="text-sm font-semibold text-slate-800 dark:text-slate-200 group-hover:text-brand-500 transition"></div>
                         <div id="user-display-role" class="text-xs text-brand-600 dark:text-brand-400 uppercase font-medium"></div>
                     </div>
                     <button id="btn-logout" title="Wyloguj" class="p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30 rounded-lg transition-colors">
@@ -183,7 +184,7 @@
             </div>
         </div>
 
-        <!-- ZMIANA HASŁA ABONENTA / UŻYTKOWNIKA (CERT POLSKA RULES) -->
+        <!-- ZMIANA HASŁA PIERWSZEGO LOGOWANIA (CERT POLSKA RULES) -->
         <div id="modal-cert-password" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
             <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl max-w-md w-full p-6 border border-slate-200 dark:border-slate-800">
                 <div class="text-center mb-4">
@@ -221,10 +222,90 @@
             </div>
         </div>
 
+        <!-- MODAL: INFORMACJE O UŻYTKOWNIKU & ZARZĄDZANIE HASŁEM -->
+        <div id="modal-user-info" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto">
+            <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl max-w-md w-full p-6 border border-slate-200 dark:border-slate-800 relative my-6">
+                <button onclick="closeUserInfoModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+                <div class="text-center mb-4">
+                    <div class="w-14 h-14 bg-brand-50 dark:bg-brand-950 text-brand-500 rounded-2xl mx-auto flex items-center justify-center text-xl mb-2 border border-brand-100 dark:border-brand-900">
+                        <i class="fa-solid fa-user-circle"></i>
+                    </div>
+                    <h3 id="info-modal-name" class="text-base font-bold text-slate-900 dark:text-white"></h3>
+                    <p id="info-modal-role" class="text-xs text-brand-600 dark:text-brand-400 uppercase font-medium mt-0.5"></p>
+                </div>
+
+                <div class="space-y-2 text-xs text-slate-600 dark:text-slate-300 bg-slate-50 dark:bg-slate-950 p-3 rounded-xl border border-slate-200 dark:border-slate-800 mb-4">
+                    <div class="flex justify-between items-center"><span class="font-semibold">Login:</span> <span id="info-modal-login" class="font-mono text-slate-900 dark:text-slate-100"></span></div>
+                    <div class="flex justify-between items-center"><span class="font-semibold">E-mail:</span> <span id="info-modal-email" class="text-slate-900 dark:text-slate-100"></span></div>
+                    <div class="flex justify-between items-center"><span class="font-semibold">Telefon:</span> <span id="info-modal-phone" class="font-mono text-slate-900 dark:text-slate-100"></span></div>
+                </div>
+
+                <!-- Sekcja zarządzania hasłem (Opcje Zmiana hasła / Restart hasła) -->
+                <div class="space-y-3 pt-2 border-t border-slate-100 dark:border-slate-800">
+                    <div class="flex items-center justify-between">
+                        <h4 class="text-xs font-bold uppercase text-slate-700 dark:text-slate-300">Bezpieczeństwo konta</h4>
+                    </div>
+
+                    <div class="flex space-x-2">
+                        <button type="button" onclick="switchPasswordTab('change')" id="btn-tab-change" class="flex-1 py-1.5 px-2 bg-brand-500 text-white text-xs font-semibold rounded-lg transition shadow-sm">Zmiana hasła</button>
+                        <button type="button" onclick="switchPasswordTab('restart')" id="btn-tab-restart" class="flex-1 py-1.5 px-2 bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-semibold rounded-lg transition">Restart hasła</button>
+                    </div>
+
+                    <!-- OPCJA 1: Zmiana hasła (wymaga obecnego hasła, bez wylogowania) -->
+                    <form id="form-user-change-pass" class="space-y-3 pt-2">
+                        <p class="text-[11px] text-slate-500 dark:text-slate-400">Podaj obecne oraz nowe hasło. Zmiana wejdzie w życie natychmiast bez wylogowania.</p>
+                        <div>
+                            <label class="block text-[11px] font-semibold text-slate-700 dark:text-slate-300 uppercase mb-1">Obecne hasło</label>
+                            <input type="password" id="ch-current-pass" required class="w-full px-2.5 py-1.5 text-xs bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg outline-none text-slate-900 dark:text-slate-100">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-semibold text-slate-700 dark:text-slate-300 uppercase mb-1">Nowe hasło</label>
+                            <input type="password" id="ch-pass-1" required class="w-full px-2.5 py-1.5 text-xs bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg outline-none text-slate-900 dark:text-slate-100">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-semibold text-slate-700 dark:text-slate-300 uppercase mb-1">Powtórz nowe hasło</label>
+                            <input type="password" id="ch-pass-2" required class="w-full px-2.5 py-1.5 text-xs bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg outline-none text-slate-900 dark:text-slate-100">
+                        </div>
+                        <button type="submit" id="btn-submit-change" disabled class="w-full py-2 bg-slate-300 dark:bg-slate-800 text-slate-500 font-semibold text-xs rounded-lg transition cursor-not-allowed">Zmień hasło</button>
+                    </form>
+
+                    <!-- OPCJA 2: Restart hasła (z wylogowaniem po 5s) -->
+                    <form id="form-user-restart-pass" class="space-y-3 pt-2 hidden">
+                        <p class="text-[11px] text-slate-500 dark:text-slate-400">Restart hasła wymusi ponowne logowanie po zapisaniu nowych danych.</p>
+                        <div>
+                            <label class="block text-[11px] font-semibold text-slate-700 dark:text-slate-300 uppercase mb-1">Nowe hasło</label>
+                            <input type="password" id="res-pass-1" required class="w-full px-2.5 py-1.5 text-xs bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg outline-none text-slate-900 dark:text-slate-100">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-semibold text-slate-700 dark:text-slate-300 uppercase mb-1">Powtórz nowe hasło</label>
+                            <input type="password" id="res-pass-2" required class="w-full px-2.5 py-1.5 text-xs bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg outline-none text-slate-900 dark:text-slate-100">
+                        </div>
+                        <button type="submit" id="btn-submit-restart" disabled class="w-full py-2 bg-slate-300 dark:bg-slate-800 text-slate-500 font-semibold text-xs rounded-lg transition cursor-not-allowed">Restartuj hasło i wyloguj</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- PLYWAJĄCE OKIENKO ODLICZANIA DO WYLOGOWANIA (5 SEKUND) -->
+        <div id="modal-logout-countdown" class="hidden fixed inset-0 bg-slate-900/70 backdrop-blur-md z-50 flex items-center justify-center p-4">
+            <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl max-w-sm w-full p-6 text-center border border-slate-200 dark:border-slate-800 space-y-4">
+                <div class="w-14 h-14 bg-amber-100 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 rounded-2xl mx-auto flex items-center justify-center text-2xl animate-pulse">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                </div>
+                <h3 class="text-lg font-bold text-slate-900 dark:text-white">Restart hasła zakończony</h3>
+                <p id="countdown-text" class="text-sm font-medium text-slate-600 dark:text-slate-300">Za chwilę nastąpi wylogowanie...</p>
+                <div class="w-full bg-slate-100 dark:bg-slate-800 h-2 rounded-full overflow-hidden">
+                    <div id="countdown-bar" class="bg-amber-500 h-full w-full transition-all duration-1000 linear"></div>
+                </div>
+            </div>
+        </div>
+
         <!-- GLÓWNY PANEL PO ZALOGOWANIU -->
         <div id="app-dashboard" class="hidden space-y-6">
 
-            <!-- Zakładki Nawigacyjne (Zgodne z wymaganiami użytkownika) -->
+            <!-- Zakładki Nawigacyjne -->
             <div class="flex flex-wrap items-center justify-between gap-4 bg-white dark:bg-slate-900 p-2 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm transition-colors duration-200">
                 <div class="flex flex-wrap space-x-1 sm:space-x-2 gap-y-1">
                     <button data-tab="tab-sim-reg" class="tab-btn px-4 py-2 text-sm font-medium rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition active-tab bg-slate-200 dark:bg-slate-800 text-slate-900 dark:text-white">
@@ -787,6 +868,147 @@
             });
         }
 
+        // ================= USER INFO MODAL & PASSWORD MANAGEMENT =================
+        window.openUserInfoModal = function() {
+            if (!currentUser) return;
+            document.getElementById('info-modal-name').textContent = currentUser.name || currentUser.login || 'Brak imienia';
+            const roleLabels = { 'admin': 'Administrator', 'advisor': 'Doradca SIM', 'subscriber': 'Abonent' };
+            document.getElementById('info-modal-role').textContent = roleLabels[currentUser.role] || currentUser.role || '-';
+            document.getElementById('info-modal-login').textContent = currentUser.login || '-';
+            document.getElementById('info-modal-email').textContent = currentUser.email || '-';
+            document.getElementById('info-modal-phone').textContent = currentUser.phone || currentUser.login || '-';
+
+            // Reset password forms
+            document.getElementById('form-user-change-pass').reset();
+            document.getElementById('form-user-restart-pass').reset();
+            switchPasswordTab('change');
+
+            document.getElementById('modal-user-info').classList.remove('hidden');
+        };
+
+        window.closeUserInfoModal = function() {
+            document.getElementById('modal-user-info').classList.add('hidden');
+        };
+
+        window.switchPasswordTab = function(type) {
+            const btnChange = document.getElementById('btn-tab-change');
+            const btnRestart = document.getElementById('btn-tab-restart');
+            const formChange = document.getElementById('form-user-change-pass');
+            const formRestart = document.getElementById('form-user-restart-pass');
+
+            if (type === 'change') {
+                btnChange.className = "flex-1 py-1.5 px-2 bg-brand-500 text-white text-xs font-semibold rounded-lg transition shadow-sm";
+                btnRestart.className = "flex-1 py-1.5 px-2 bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-semibold rounded-lg transition";
+                formChange.classList.remove('hidden');
+                formRestart.classList.add('hidden');
+            } else {
+                btnRestart.className = "flex-1 py-1.5 px-2 bg-brand-500 text-white text-xs font-semibold rounded-lg transition shadow-sm";
+                btnChange.className = "flex-1 py-1.5 px-2 bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-semibold rounded-lg transition";
+                formRestart.classList.remove('hidden');
+                formChange.classList.add('hidden');
+            }
+        };
+
+        // Walidacja CERT Polska dla pól zmiany hasła
+        function validatePasswordInput(p1, p2, submitBtnId) {
+            const hasLen = p1.length >= 12;
+            const hasUpper = /[A-Z]/.test(p1);
+            const hasLower = /[a-z]/.test(p1);
+            const hasNum = /[0-9]/.test(p1);
+            const hasSpec = /[!@#$%^&*(),.?":{}|<>]/.test(p1);
+            const match = p1 === p2 && p1.length > 0;
+
+            const btn = document.getElementById(submitBtnId);
+            if (hasLen && hasUpper && hasLower && hasNum && hasSpec && match) {
+                btn.disabled = false;
+                btn.className = "w-full py-2 bg-brand-500 hover:bg-brand-600 text-white font-semibold text-xs rounded-lg transition cursor-pointer shadow";
+            } else {
+                btn.disabled = true;
+                btn.className = "w-full py-2 bg-slate-300 dark:bg-slate-800 text-slate-500 font-semibold text-xs rounded-lg transition cursor-not-allowed";
+            }
+        }
+
+        document.getElementById('ch-pass-1').addEventListener('input', () => {
+            validatePasswordInput(document.getElementById('ch-pass-1').value, document.getElementById('ch-pass-2').value, 'btn-submit-change');
+        });
+        document.getElementById('ch-pass-2').addEventListener('input', () => {
+            validatePasswordInput(document.getElementById('ch-pass-1').value, document.getElementById('ch-pass-2').value, 'btn-submit-change');
+        });
+
+        document.getElementById('res-pass-1').addEventListener('input', () => {
+            validatePasswordInput(document.getElementById('res-pass-1').value, document.getElementById('res-pass-2').value, 'btn-submit-restart');
+        });
+        document.getElementById('res-pass-2').addEventListener('input', () => {
+            validatePasswordInput(document.getElementById('res-pass-1').value, document.getElementById('res-pass-2').value, 'btn-submit-restart');
+        });
+
+        // 1. Zmiana hasła (z podaniem obecnego hasła, bez wylogowania)
+        document.getElementById('form-user-change-pass').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            if (!currentUser) return;
+
+            const currentPassInput = document.getElementById('ch-current-pass').value;
+            const newPass = document.getElementById('ch-pass-1').value;
+
+            if (currentPassInput !== currentUser.password) {
+                showToast("Podane obecne hasło jest nieprawidłowe!", "error");
+                return;
+            }
+
+            try {
+                await updateDoc(getPublicDocPath('users', currentUser.id), { password: newPass });
+                currentUser.password = newPass;
+                closeUserInfoModal();
+                showToast("Hasło zostało pomyślnie zmienione, przy kolejnym logowaniu posługuj się nowym hasłem", "success");
+            } catch (err) {
+                showToast("Błąd zmiany hasła: " + err.message, "error");
+            }
+        });
+
+        // 2. Restart hasła (z wylogowaniem po 5s)
+        document.getElementById('form-user-restart-pass').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            if (!currentUser) return;
+            const newPass = document.getElementById('res-pass-1').value;
+
+            try {
+                await updateDoc(getPublicDocPath('users', currentUser.id), { password: newPass });
+                currentUser.password = newPass;
+                closeUserInfoModal();
+
+                // Wyświetl pływające okienko odliczania przez 5 sekund
+                const countdownModal = document.getElementById('modal-logout-countdown');
+                const countdownBar = document.getElementById('countdown-bar');
+                const countdownText = document.getElementById('countdown-text');
+                
+                countdownModal.classList.remove('hidden');
+                countdownBar.style.width = '100%';
+                
+                setTimeout(() => {
+                    countdownBar.style.transition = 'width 5s linear';
+                    countdownBar.style.width = '0%';
+                }, 50);
+
+                let secondsLeft = 5;
+                const interval = setInterval(() => {
+                    secondsLeft--;
+                    if (secondsLeft > 0) {
+                        countdownText.textContent = `Za chwilę nastąpi wylogowanie... (${secondsLeft}s)`;
+                    }
+                }, 1000);
+
+                setTimeout(() => {
+                    clearInterval(interval);
+                    countdownModal.classList.add('hidden');
+                    logout();
+                    showToast("Zrestartowano hasło. Zaloguj się ponownie.", "info");
+                }, 5000);
+
+            } catch (err) {
+                showToast("Błąd restartu hasła: " + err.message, "error");
+            }
+        });
+
         // ================= AUTHENTICATION =================
         document.getElementById('form-login').addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -804,7 +1026,6 @@
 
                 usersSnap.forEach(docSnap => {
                     const u = docSnap.data();
-                    // Sprawdzamy login, email lub numer telefonu (dla abonentów)
                     if (u.login === login || u.email === login || u.phone === login) {
                         foundUser = { id: docSnap.id, ...u };
                     }
@@ -826,7 +1047,6 @@
                     applyTheme(currentUser.theme);
                 }
 
-                // Sprawdzenie wymogu zmiany hasła (np. dla abonenta z hasłem tymczasowym)
                 if (currentUser.mustChangePassword) {
                     openCertPasswordModal();
                     return;
@@ -859,7 +1079,7 @@
             showToast(`Zalogowano pomyślnie jako ${currentUser.name || currentUser.login}`, "success");
         }
 
-        document.getElementById('btn-logout').addEventListener('click', () => {
+        window.logout = function() {
             currentUser = null;
             appDashboard.classList.add('hidden');
             userInfoBar.classList.add('hidden');
@@ -867,7 +1087,8 @@
             document.getElementById('form-login').reset();
             verifyAdminExistenceInDatabase();
             showToast("Wylogowano z systemu", "info");
-        });
+        }
+        document.getElementById('btn-logout').addEventListener('click', logout);
 
         // ================= ADMIN INITIALIZATION =================
         document.getElementById('btn-show-init-admin').addEventListener('click', () => {
@@ -908,7 +1129,7 @@
             }
         });
 
-        // ================= CERT POLSKA PASSWORD MODAL =================
+        // ================= CERT POLSKA PASSWORD MODAL (PIERWSZE LOGOWANIE) =================
         const modalCertPass = document.getElementById('modal-cert-password');
         const certPass1 = document.getElementById('cert-pass-1');
         const certPass2 = document.getElementById('cert-pass-2');
@@ -1065,9 +1286,9 @@
             const mnpList = operationsData.filter(o => o.type === 'MNP (Przeniesienie Numeru)');
             const cesjaList = operationsData.filter(o => o.type === 'Cesja Numeru' || o.type === 'Karta na Abonament');
 
-            simRegBody.innerHTML = renderTableRows(simRegList, 'sim-reg');
-            mnpBody.innerHTML = renderTableRows(mnpList, 'mnp');
-            cesjaBody.innerHTML = renderTableRows(cesjaList, 'cesja');
+            simRegBody.innerHTML = renderTableRows(simRegList);
+            mnpBody.innerHTML = renderTableRows(mnpList);
+            cesjaBody.innerHTML = renderTableRows(cesjaList);
         }
 
         function renderTableRows(list) {
@@ -1157,9 +1378,8 @@
             const newCust = { firstName, lastName, isCompany, companyName, nip, pesel, docNumber, email, phone, address, createdAt: new Date().toISOString() };
 
             try {
-                const docRef = await addDoc(getPublicCollPath('customers'), newCust);
+                await addDoc(getPublicCollPath('customers'), newCust);
 
-                // Automatyczne utworzenie konta abonenta z hasłem tymczasowym jeśli podano telefon
                 if (phone) {
                     const tempPassword = 'Temp' + Math.floor(100000 + Math.random() * 900000) + '!A';
                     await addDoc(getPublicCollPath('users'), {
