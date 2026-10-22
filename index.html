@@ -554,14 +554,14 @@
         <span id="toast-msg">Powiadomienie systemowe</span>
     </div>
 
-    <!-- JAVASCRIPT APP SCRIPT -->
+    <!-- JAVASCRIPT APP SCRIPT & FIREBASE v13.1.0 MODULE -->
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-app.js";
         import { 
             getAuth, 
             signInAnonymously, 
             signInWithCustomToken
-        } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-auth.js";
         import { 
             getFirestore, 
             collection, 
@@ -571,20 +571,18 @@
             updateDoc, 
             deleteDoc, 
             onSnapshot 
-        } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-firestore.js";
 
-        // Global app configuration & vars provided by user snippet
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'sim-registration-portal-v1';
-        const firebaseConfig = typeof __firebase_config !== 'undefined' 
-            ? JSON.parse(__firebase_config) 
-            : {
-                apiKey: "AIzaSyCHhUMjx-8B5TLZGYbtqd-Ie9U1oWdDjyE",
-                authDomain: "register-sim-card-8765c.firebaseapp.com",
-                projectId: "register-sim-card-8765c",
-                storageBucket: "register-sim-card-8765c.firebasestorage.app",
-                messagingSenderId: "410790102714",
-                appId: "1:410790102714:web:921f4f3eff4543aad1e483"
-              };
+        // Global app configuration & Firebase config provided by user snippet
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'register-sim-card-8765c';
+        const firebaseConfig = {
+            apiKey: "AIzaSyCHhUMjx-8B5TLZGYbtqd-Ie9U1oWdDjyE",
+            authDomain: "register-sim-card-8765c.firebaseapp.com",
+            projectId: "register-sim-card-8765c",
+            storageBucket: "register-sim-card-8765c.firebasestorage.app",
+            messagingSenderId: "410790102714",
+            appId: "1:410790102714:web:921f4f3eff4543aad1e483"
+        };
 
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
@@ -766,6 +764,7 @@
                     usersData.push({ id: docSnap.id, ...docSnap.data() });
                 });
                 renderUsersTable();
+                verifyAdminExistenceInDatabase();
             }, (err) => showToast("Błąd synchronizacji użytkowników: " + err.message, "error"));
         }
 
