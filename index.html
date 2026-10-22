@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIM-Register Pro - System Rejestracji Kart SIM i MNP</title>
+    <title>SIM-Register Pro - System Rejestracji i Obsługi Kart SIM</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -47,7 +47,7 @@
                 </div>
                 <div>
                     <h1 class="font-bold text-lg text-slate-900 dark:text-white leading-tight">SIM-Register Pro</h1>
-                    <p class="text-xs text-slate-500 dark:text-slate-400">System Rejestracji i Obsługi Kart SIM</p>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">System Obsługi Kart SIM, MNP i Cesji</p>
                 </div>
             </div>
 
@@ -87,16 +87,16 @@
                         <i class="fa-solid fa-user-shield"></i>
                     </div>
                     <h2 class="text-xl font-bold text-slate-900 dark:text-white">Logowanie do systemu</h2>
-                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Zaloguj się jako Doradca, Admin lub Abonent</p>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Wpisz login, email lub numer telefonu abonenta</p>
                 </div>
 
                 <!-- Formularz logowania -->
                 <form id="form-login" class="space-y-4">
                     <div>
-                        <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase mb-1">Identyfikator / Login / Nr tel.</label>
+                        <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase mb-1">Login / Email / Nr tel. abonenta</label>
                         <div class="relative">
                             <i class="fa-solid fa-user absolute left-3 top-3 text-slate-400 text-sm"></i>
-                            <input type="text" id="login-input" required placeholder="Wpisz login lub numer" class="w-full pl-9 pr-3 py-2.5 text-sm bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition text-slate-900 dark:text-slate-100">
+                            <input type="text" id="login-input" required placeholder="np. admin, doradca1 lub 500600700" class="w-full pl-9 pr-3 py-2.5 text-sm bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition text-slate-900 dark:text-slate-100">
                         </div>
                     </div>
 
@@ -127,7 +127,7 @@
                             <i class="fa-solid fa-triangle-exclamation text-amber-600"></i>
                             <span>Brak administratora w bazie danych!</span>
                         </div>
-                        <p class="text-xs text-amber-700 dark:text-amber-400 mb-3">W bazie danych Firestore nie znaleziono żadnego konta z rolą 'admin'. Dostępna jest opcja utworzenia pierwszego konta administracyjnego.</p>
+                        <p class="text-xs text-amber-700 dark:text-amber-400 mb-3">W bazie Firestore nie ma jeszcze konta administratora. Utwórz pierwsze konto, aby zarządzać systemem.</p>
                         <button id="btn-show-init-admin" class="w-full py-2 px-3 bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold rounded-lg shadow transition">
                             <i class="fa-solid fa-user-plus mr-1"></i> Utwórz konto pierwszego Administratora
                         </button>
@@ -136,7 +136,7 @@
                     <!-- Baner gdy admin ISTNIEJE w bazie -->
                     <div id="admin-exists-box" class="hidden bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl p-3 text-center text-xs text-slate-500 dark:text-slate-400">
                         <i class="fa-solid fa-circle-check text-green-500 mr-1"></i>
-                        Konto administratora znajduje się w bazie danych. Inicjalizacja zablokowana.
+                        System zainicjalizowany (konto administratora aktywne).
                     </div>
                 </div>
             </div>
@@ -163,7 +163,7 @@
                     </div>
                     <div>
                         <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase mb-1">Hasło</label>
-                        <input type="password" id="init-admin-pass" required placeholder="Min. 12 znaków, cyfra, symbol" class="w-full px-3 py-2 text-sm bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-brand-500 outline-none text-slate-900 dark:text-slate-100">
+                        <input type="password" id="init-admin-pass" required placeholder="Hasło (np. silne hasło admina)" class="w-full px-3 py-2 text-sm bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-brand-500 outline-none text-slate-900 dark:text-slate-100">
                     </div>
                     <div>
                         <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase mb-1">Imię i Nazwisko</label>
@@ -183,7 +183,7 @@
             </div>
         </div>
 
-        <!-- ZMIANA HASŁA ABONENTA (CERT POLSKA RULES) -->
+        <!-- ZMIANA HASŁA ABONENTA / UŻYTKOWNIKA (CERT POLSKA RULES) -->
         <div id="modal-cert-password" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
             <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl max-w-md w-full p-6 border border-slate-200 dark:border-slate-800">
                 <div class="text-center mb-4">
@@ -224,85 +224,146 @@
         <!-- GLÓWNY PANEL PO ZALOGOWANIU -->
         <div id="app-dashboard" class="hidden space-y-6">
 
-            <!-- Zakładki Nawigacyjne -->
+            <!-- Zakładki Nawigacyjne (Zgodne z wymaganiami użytkownika) -->
             <div class="flex flex-wrap items-center justify-between gap-4 bg-white dark:bg-slate-900 p-2 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm transition-colors duration-200">
-                <div class="flex space-x-1 sm:space-x-2">
-                    <button data-tab="tab-operations" class="tab-btn px-4 py-2 text-sm font-medium rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition active-tab bg-slate-200 dark:bg-slate-800">
-                        <i class="fa-solid fa-list-check mr-1.5"></i> Rejestracje SIM
+                <div class="flex flex-wrap space-x-1 sm:space-x-2 gap-y-1">
+                    <button data-tab="tab-sim-reg" class="tab-btn px-4 py-2 text-sm font-medium rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition active-tab bg-slate-200 dark:bg-slate-800 text-slate-900 dark:text-white">
+                        <i class="fa-solid fa-sim-card mr-1.5"></i> Rejestracja karty numeru
                     </button>
-                    <button id="tab-btn-customers" data-tab="tab-customers" class="tab-btn px-4 py-2 text-sm font-medium rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
-                        <i class="fa-solid fa-users mr-1.5"></i> Klienci
+                    <button data-tab="tab-mnp" class="tab-btn px-4 py-2 text-sm font-medium rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+                        <i class="fa-solid fa-right-left mr-1.5"></i> Przenoszenie numeru
+                    </button>
+                    <button data-tab="tab-cesja" class="tab-btn px-4 py-2 text-sm font-medium rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+                        <i class="fa-solid fa-file-contract mr-1.5"></i> Cesja numeru
+                    </button>
+                    <button data-tab="tab-customers" class="tab-btn px-4 py-2 text-sm font-medium rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+                        <i class="fa-solid fa-user-plus mr-1.5"></i> Dodawanie klienta
                     </button>
                     <button id="tab-btn-users" data-tab="tab-users" class="tab-btn hidden px-4 py-2 text-sm font-medium rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
-                        <i class="fa-solid fa-user-shield mr-1.5"></i> Pracownicy / Admini
+                        <i class="fa-solid fa-user-shield mr-1.5"></i> Pracownicy
                     </button>
                 </div>
 
                 <div class="flex items-center space-x-2">
                     <button id="btn-open-new-op" class="px-4 py-2 bg-brand-500 hover:bg-brand-600 text-white font-medium text-sm rounded-xl shadow-md shadow-brand-500/20 transition flex items-center">
-                        <i class="fa-solid fa-plus mr-2"></i> Nowa Rejestracja SIM
+                        <i class="fa-solid fa-plus mr-2"></i> Nowa Operacja SIM
                     </button>
                 </div>
             </div>
 
-            <!-- ZAKŁADKA 1: LISTA REJESTRACJI SIM -->
-            <div id="tab-operations" class="tab-content">
-                <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden transition-colors duration-200">
-                    <div class="p-4 border-b border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50 flex flex-col sm:flex-row justify-between gap-4">
-                        <div class="relative flex-1 max-w-md">
-                            <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-slate-400 text-sm"></i>
-                            <input type="text" id="search-op-input" placeholder="Szukaj po numerze MSISDN, ICCID, imieniu..." class="w-full pl-9 pr-3 py-2 text-sm bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl outline-none focus:ring-2 focus:ring-brand-500 text-slate-900 dark:text-slate-100">
+            <!-- ZAKŁADKA 1: REJESTRACJA KARTY NUMERU -->
+            <div id="tab-sim-reg" class="tab-content space-y-4">
+                <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden p-4 sm:p-6 transition-colors duration-200">
+                    <div class="flex justify-between items-center mb-4">
+                        <div>
+                            <h3 class="font-bold text-slate-900 dark:text-white text-lg">Rejestracja Karty SIM (Nowy Numer)</h3>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">Wszystkie sieci MNO oraz submarki / MVNO</p>
                         </div>
-                        <div class="flex items-center space-x-2">
-                            <select id="filter-operator" class="px-3 py-2 text-sm bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl outline-none text-slate-900 dark:text-slate-100">
-                                <option value="">Wszyscy operatorzy</option>
-                                <option value="PLAY">PLAY</option>
-                                <option value="Virgin Mobile">Virgin Mobile</option>
-                                <option value="Plus">Plus</option>
-                                <option value="Plush">Plush</option>
-                                <option value="Orange">Orange</option>
-                                <option value="Nju Mobile">Nju Mobile</option>
-                                <option value="T-Mobile">T-Mobile</option>
-                                <option value="Heyah">Heyah</option>
-                                <option value="Mobile Vikings">Mobile Vikings</option>
-                                <option value="Klucz Mobile">Klucz Mobile</option>
-                            </select>
-                        </div>
+                        <button onclick="openOperationModal('Rejestracja Nowego Numeru')" class="px-3 py-2 bg-brand-500 hover:bg-brand-600 text-white text-xs font-semibold rounded-xl transition">
+                            <i class="fa-solid fa-plus mr-1"></i> Zarejestruj Nowy Numer
+                        </button>
                     </div>
-
                     <div class="overflow-x-auto">
                         <table class="w-full text-left text-sm">
-                            <thead class="bg-slate-100 dark:bg-slate-800/80 text-slate-600 dark:text-slate-300 uppercase text-[11px] font-semibold tracking-wider">
+                            <thead class="bg-slate-100 dark:bg-slate-800/80 text-slate-600 dark:text-slate-300 uppercase text-[11px] font-semibold">
                                 <tr>
-                                    <th class="p-3.5">Data</th>
-                                    <th class="p-3.5">Abonent</th>
-                                    <th class="p-3.5">Operator</th>
-                                    <th class="p-3.5">MSISDN / ICCID</th>
-                                    <th class="p-3.5">Typ Operacji</th>
-                                    <th class="p-3.5">Status</th>
-                                    <th class="p-3.5 text-right">Akcje</th>
+                                    <th class="p-3">Data</th>
+                                    <th class="p-3">Abonent</th>
+                                    <th class="p-3">Operator / Marka</th>
+                                    <th class="p-3">MSISDN / ICCID</th>
+                                    <th class="p-3">Status</th>
+                                    <th class="p-3 text-right">Akcje</th>
                                 </tr>
                             </thead>
-                            <tbody id="table-operations-body" class="divide-y divide-slate-100 dark:divide-slate-800">
-                                <tr>
-                                    <td colspan="7" class="text-center p-8 text-slate-400">Ładowanie danych z Firestore...</td>
-                                </tr>
+                            <tbody id="table-sim-reg-body" class="divide-y divide-slate-100 dark:divide-slate-800">
+                                <tr><td colspan="6" class="text-center p-6 text-slate-400">Ładowanie...</td></tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
 
-            <!-- ZAKŁADKA 2: KLIENCI -->
-            <div id="tab-customers" class="tab-content hidden">
-                <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-4 sm:p-6 space-y-4 transition-colors duration-200">
-                    <div class="flex justify-between items-center">
-                        <h3 class="font-bold text-slate-800 dark:text-white text-lg">Baza Klientów</h3>
-                        <button id="btn-add-customer-modal" class="px-3 py-2 bg-slate-800 dark:bg-slate-800 hover:bg-slate-900 dark:hover:bg-slate-700 text-white text-xs font-semibold rounded-xl transition">
+            <!-- ZAKŁADKA 2: PRZENOSZENIE NUMERU (MNP) -->
+            <div id="tab-mnp" class="tab-content hidden space-y-4">
+                <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden p-4 sm:p-6 transition-colors duration-200">
+                    <div class="flex justify-between items-center mb-4">
+                        <div>
+                            <h3 class="font-bold text-slate-900 dark:text-white text-lg">Przenoszenie Numeru (MNP)</h3>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">Portowanie numeru z innego oprogramowania / operatora</p>
+                        </div>
+                        <button onclick="openOperationModal('MNP (Przeniesienie Numeru)')" class="px-3 py-2 bg-brand-500 hover:bg-brand-600 text-white text-xs font-semibold rounded-xl transition">
+                            <i class="fa-solid fa-plus mr-1"></i> Przenieś Numer
+                        </button>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-sm">
+                            <thead class="bg-slate-100 dark:bg-slate-800/80 text-slate-600 dark:text-slate-300 uppercase text-[11px] font-semibold">
+                                <tr>
+                                    <th class="p-3">Data</th>
+                                    <th class="p-3">Abonent</th>
+                                    <th class="p-3">Docelowy Operator</th>
+                                    <th class="p-3">MSISDN</th>
+                                    <th class="p-3">Status MNP</th>
+                                    <th class="p-3 text-right">Akcje</th>
+                                </tr>
+                            </thead>
+                            <tbody id="table-mnp-body" class="divide-y divide-slate-100 dark:divide-slate-800">
+                                <tr><td colspan="6" class="text-center p-6 text-slate-400">Ładowanie...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ZAKŁADKA 3: CESJA NUMERU & ABONAMENT -->
+            <div id="tab-cesja" class="tab-content hidden space-y-4">
+                <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden p-4 sm:p-6 transition-colors duration-200">
+                    <div class="flex justify-between items-center mb-4">
+                        <div>
+                            <h3 class="font-bold text-slate-900 dark:text-white text-lg">Cesje Numerów oraz Przejście na Abonament</h3>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">Zmiana właściciela numeru oraz migracja z karty na abonament</p>
+                        </div>
+                        <div class="space-x-2">
+                            <button onclick="openOperationModal('Cesja Numeru')" class="px-3 py-2 bg-brand-500 hover:bg-brand-600 text-white text-xs font-semibold rounded-xl transition">
+                                <i class="fa-solid fa-file-contract mr-1"></i> Nowa Cesja
+                            </button>
+                            <button onclick="openOperationModal('Karta na Abonament')" class="px-3 py-2 bg-slate-800 dark:bg-slate-700 hover:bg-slate-900 text-white text-xs font-semibold rounded-xl transition">
+                                <i class="fa-solid fa-arrow-up-right-dots mr-1"></i> Na Abonament
+                            </button>
+                        </div>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-sm">
+                            <thead class="bg-slate-100 dark:bg-slate-800/80 text-slate-600 dark:text-slate-300 uppercase text-[11px] font-semibold">
+                                <tr>
+                                    <th class="p-3">Data</th>
+                                    <th class="p-3">Abonent</th>
+                                    <th class="p-3">Operator</th>
+                                    <th class="p-3">Typ Operacji</th>
+                                    <th class="p-3">MSISDN</th>
+                                    <th class="p-3 text-right">Akcje</th>
+                                </tr>
+                            </thead>
+                            <tbody id="table-cesja-body" class="divide-y divide-slate-100 dark:divide-slate-800">
+                                <tr><td colspan="6" class="text-center p-6 text-slate-400">Ładowanie...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ZAKŁADKA 4: DODAWANIE KLIENTA / KLIENCI -->
+            <div id="tab-customers" class="tab-content hidden space-y-4">
+                <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-4 sm:p-6 transition-colors duration-200">
+                    <div class="flex justify-between items-center mb-4">
+                        <div>
+                            <h3 class="font-bold text-slate-900 dark:text-white text-lg">Baza Klientów / Abonentów</h3>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">Dodawaj dane osobowe abonentów kart SIM</p>
+                        </div>
+                        <button id="btn-add-customer-modal" class="px-3 py-2 bg-brand-500 hover:bg-brand-600 text-white text-xs font-semibold rounded-xl transition">
                             <i class="fa-solid fa-user-plus mr-1"></i> Dodaj Klienta
                         </button>
                     </div>
-
                     <div class="overflow-x-auto">
                         <table class="w-full text-left text-sm">
                             <thead class="bg-slate-100 dark:bg-slate-800/80 text-slate-600 dark:text-slate-300 uppercase text-[11px] font-semibold">
@@ -316,28 +377,25 @@
                                 </tr>
                             </thead>
                             <tbody id="table-customers-body" class="divide-y divide-slate-100 dark:divide-slate-800">
-                                <tr>
-                                    <td colspan="6" class="text-center p-6 text-slate-400">Brak zarejestrowanych klientów</td>
-                                </tr>
+                                <tr><td colspan="6" class="text-center p-6 text-slate-400">Brak klientów</td></tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
 
-            <!-- ZAKŁADKA 3: PRACWNICY / ADMINI (Tylko Admin) -->
-            <div id="tab-users" class="tab-content hidden">
-                <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-4 sm:p-6 space-y-4 transition-colors duration-200">
-                    <div class="flex justify-between items-center">
+            <!-- ZAKŁADKA 5: PRACOWNICY / ADMINI -->
+            <div id="tab-users" class="tab-content hidden space-y-4">
+                <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-4 sm:p-6 transition-colors duration-200">
+                    <div class="flex justify-between items-center mb-4">
                         <div>
-                            <h3 class="font-bold text-slate-800 dark:text-white text-lg">Konta Użytkowników Systemu</h3>
-                            <p class="text-xs text-slate-500 dark:text-slate-400">Zarządzaj doradcami oraz administratorami</p>
+                            <h3 class="font-bold text-slate-900 dark:text-white text-lg">Zarządzanie Pracownikami</h3>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">Konta doradców i administratorów</p>
                         </div>
                         <button id="btn-add-user-modal" class="px-3 py-2 bg-brand-500 hover:bg-brand-600 text-white text-xs font-semibold rounded-xl transition">
-                            <i class="fa-solid fa-plus mr-1"></i> Dodaj Pracownika
+                            <i class="fa-solid fa-user-plus mr-1"></i> Dodaj Doradcę
                         </button>
                     </div>
-
                     <div class="overflow-x-auto">
                         <table class="w-full text-left text-sm">
                             <thead class="bg-slate-100 dark:bg-slate-800/80 text-slate-600 dark:text-slate-300 uppercase text-[11px] font-semibold">
@@ -350,9 +408,7 @@
                                 </tr>
                             </thead>
                             <tbody id="table-users-body" class="divide-y divide-slate-100 dark:divide-slate-800">
-                                <tr>
-                                    <td colspan="5" class="text-center p-6 text-slate-400">Ładowanie użytkowników...</td>
-                                </tr>
+                                <tr><td colspan="5" class="text-center p-6 text-slate-400">Brak użytkowników</td></tr>
                             </tbody>
                         </table>
                     </div>
@@ -362,11 +418,11 @@
         </div>
     </main>
 
-    <!-- MODAL: NOWA / EDYCJA REJESTRACJA SIM -->
+    <!-- MODAL: NOWA / EDYCJA OPERACJA SIM -->
     <div id="modal-op" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto">
         <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl max-w-2xl w-full p-6 border border-slate-200 dark:border-slate-800 my-8">
             <div class="flex justify-between items-center pb-4 border-b border-slate-200 dark:border-slate-800 mb-4">
-                <h3 id="modal-op-title" class="text-lg font-bold text-slate-900 dark:text-white">Nowa Rejestracja Karty SIM</h3>
+                <h3 id="modal-op-title" class="text-lg font-bold text-slate-900 dark:text-white">Operacja SIM</h3>
                 <button id="btn-close-op-modal" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
                     <i class="fa-solid fa-xmark text-xl"></i>
                 </button>
@@ -375,7 +431,6 @@
             <form id="form-op" class="space-y-4">
                 <input type="hidden" id="op-id">
 
-                <!-- Wybór Klienta -->
                 <div>
                     <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase mb-1">Abonent / Klient *</label>
                     <select id="op-customer-id" required class="w-full px-3 py-2 text-sm bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-brand-500 outline-none text-slate-900 dark:text-slate-100">
@@ -383,7 +438,6 @@
                     </select>
                 </div>
 
-                <!-- Operator i Submarki -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                         <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase mb-1">Główny Operator *</label>
@@ -396,25 +450,23 @@
                     </div>
 
                     <div>
-                        <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase mb-1">Marka / Oferta *</label>
+                        <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase mb-1">Marka / Sub-operator *</label>
                         <select id="op-sub-operator" required class="w-full px-3 py-2 text-sm bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-brand-500 outline-none text-slate-900 dark:text-slate-100">
-                            <!-- Wypełniane dynamicznie w JS -->
+                            <!-- Dynamic -->
                         </select>
                     </div>
                 </div>
 
-                <!-- Typ Operacji -->
                 <div>
                     <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase mb-1">Typ Operacji *</label>
                     <select id="op-type" required class="w-full px-3 py-2 text-sm bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-brand-500 outline-none text-slate-900 dark:text-slate-100">
                         <option value="Rejestracja Nowego Numeru">Rejestracja Nowego Numeru na Kartę</option>
-                        <option value="MNP (Przeniesienie Numeru)">MNP - Przeniesienie Numeru od innego Operatora</option>
+                        <option value="MNP (Przeniesienie Numeru)">MNP - Przeniesienie Numeru</option>
                         <option value="Cesja Numeru">Cesja (Zmiana Właściciela)</option>
                         <option value="Karta na Abonament">Przejście z Karty na Abonament</option>
                     </select>
                 </div>
 
-                <!-- Numery MSISDN / ICCID -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                         <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase mb-1">Numer Telefonu (MSISDN) *</label>
@@ -426,10 +478,9 @@
                     </div>
                 </div>
 
-                <!-- Status i Uwagi -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase mb-1">Status Operacji</label>
+                        <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase mb-1">Status</label>
                         <select id="op-status" class="w-full px-3 py-2 text-sm bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-brand-500 outline-none text-slate-900 dark:text-slate-100">
                             <option value="Zarejestrowana">Zarejestrowana (Aktywna)</option>
                             <option value="W trakcie realizacji">W trakcie realizacji</option>
@@ -438,14 +489,14 @@
                         </select>
                     </div>
                     <div>
-                        <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase mb-1">Uwagi / Nr Zgłoszenia</label>
-                        <input type="text" id="op-notes" placeholder="Opcjonalne uwagi..." class="w-full px-3 py-2 text-sm bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-brand-500 outline-none text-slate-900 dark:text-slate-100">
+                        <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase mb-1">Uwagi / Zgłoszenie</label>
+                        <input type="text" id="op-notes" placeholder="Dodatkowe informacje..." class="w-full px-3 py-2 text-sm bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-brand-500 outline-none text-slate-900 dark:text-slate-100">
                     </div>
                 </div>
 
                 <div class="pt-4 flex justify-end space-x-3 border-t border-slate-100 dark:border-slate-800">
-                    <button type="button" id="btn-cancel-op" class="px-4 py-2 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-sm font-medium rounded-xl hover:bg-slate-200 dark:hover:bg-slate-700 transition">Anuluj</button>
-                    <button type="submit" class="px-5 py-2 bg-brand-500 hover:bg-brand-600 text-white text-sm font-medium rounded-xl shadow transition">Zapisz Operację</button>
+                    <button type="button" id="btn-cancel-op" class="px-4 py-2 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-sm font-medium rounded-xl">Anuluj</button>
+                    <button type="submit" class="px-5 py-2 bg-brand-500 hover:bg-brand-600 text-white text-sm font-medium rounded-xl shadow">Zapisz Operację</button>
                 </div>
             </form>
         </div>
@@ -455,7 +506,7 @@
     <div id="modal-customer" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto">
         <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl max-w-xl w-full p-6 border border-slate-200 dark:border-slate-800 my-8">
             <div class="flex justify-between items-center pb-3 border-b border-slate-200 dark:border-slate-800 mb-4">
-                <h3 class="text-lg font-bold text-slate-900 dark:text-white">Nowy Klient / Abonent</h3>
+                <h3 class="text-lg font-bold text-slate-900 dark:text-white">Nowy Klient / Abonent Karty SIM</h3>
                 <button id="btn-close-cust-modal" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
                     <i class="fa-solid fa-xmark text-xl"></i>
                 </button>
@@ -514,8 +565,8 @@
                         <input type="email" id="cust-email" placeholder="jan@example.pl" class="w-full px-3 py-2 text-sm bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl outline-none text-slate-900 dark:text-slate-100">
                     </div>
                     <div>
-                        <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase mb-1">Telefon kontaktowy</label>
-                        <input type="text" id="cust-phone" placeholder="9 cyfr" class="w-full px-3 py-2 text-sm bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl outline-none text-slate-900 dark:text-slate-100">
+                        <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase mb-1">Telefon kontaktowy (Login abonenta)</label>
+                        <input type="text" id="cust-phone" placeholder="np. 500600700" class="w-full px-3 py-2 text-sm bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl outline-none text-slate-900 dark:text-slate-100">
                     </div>
                 </div>
 
@@ -525,8 +576,8 @@
                 </div>
 
                 <div class="pt-4 flex justify-end space-x-3 border-t border-slate-100 dark:border-slate-800">
-                    <button type="button" id="btn-cancel-cust" class="px-4 py-2 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-sm font-medium rounded-xl hover:bg-slate-200 dark:hover:bg-slate-700">Anuluj</button>
-                    <button type="submit" class="px-5 py-2 bg-slate-800 dark:bg-slate-700 hover:bg-slate-900 dark:hover:bg-slate-600 text-white text-sm font-medium rounded-xl shadow">Zapisz Klienta</button>
+                    <button type="button" id="btn-cancel-cust" class="px-4 py-2 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-sm font-medium rounded-xl">Anuluj</button>
+                    <button type="submit" class="px-5 py-2 bg-slate-800 dark:bg-slate-700 hover:bg-slate-900 text-white text-sm font-medium rounded-xl shadow">Zapisz Klienta i Utwórz Konto</button>
                 </div>
             </form>
         </div>
@@ -539,29 +590,24 @@
                 <i class="fa-solid fa-trash-can"></i>
             </div>
             <h3 class="font-bold text-slate-900 dark:text-white text-base mb-1">Potwierdź usunięcie</h3>
-            <p class="text-xs text-slate-500 dark:text-slate-400 mb-6">Czy na pewno chcesz usunąć ten rekord z bazy danych Firestore? Operacja jest nieodwracalna.</p>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mb-6">Czy na pewno chcesz usunąć ten rekord z bazy Firestore?</p>
 
             <div class="flex space-x-3">
-                <button id="btn-delete-cancel" class="flex-1 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-sm font-medium rounded-xl">Anuluj</button>
+                <button id="btn-delete-cancel" class="flex-1 py-2 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-sm font-medium rounded-xl">Anuluj</button>
                 <button id="btn-delete-confirm" class="flex-1 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-xl shadow">Usuń</button>
             </div>
         </div>
     </div>
 
-    <!-- NOTIFIKACJE / TOAST -->
+    <!-- TOAST NOTIFICATIONS -->
     <div id="toast" class="fixed bottom-5 right-5 z-50 hidden max-w-sm bg-slate-900 dark:bg-slate-800 text-white px-4 py-3 rounded-xl shadow-2xl text-xs flex items-center space-x-3 border border-slate-700">
         <i id="toast-icon" class="fa-solid fa-circle-info text-brand-500 text-base"></i>
-        <span id="toast-msg">Powiadomienie systemowe</span>
+        <span id="toast-msg">Powiadomienie</span>
     </div>
 
-    <!-- JAVASCRIPT APP SCRIPT & FIREBASE v13.1.0 MODULE -->
+    <!-- JAVASCRIPT & FIREBASE SDK 11.6.1 -->
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-app.js";
-        import { 
-            getAuth, 
-            signInAnonymously, 
-            signInWithCustomToken
-        } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-auth.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { 
             getFirestore, 
             collection, 
@@ -571,28 +617,24 @@
             updateDoc, 
             deleteDoc, 
             onSnapshot 
-        } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-firestore.js";
+        } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // Global app configuration & Firebase config provided by user snippet
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'register-sim-card-8765c';
-const firebaseConfig = {
-    apiKey: "AIzaSyCHhUMjx-8B5TLZGYbtqd-Ie9U1oWdDjyE",
-    authDomain: "register-sim-card-8765c.firebaseapp.com",
-    projectId: "register-sim-card-8765c",
-    storageBucket: "register-sim-card-8765c.firebasestorage.app",
-    messagingSenderId: "410790102714",
-    appId: "1:410790102714:web:921f4f3eff4543aad1e483"
-  };
+        const firebaseConfig = {
+            apiKey: "AIzaSyCHhUMjx-8B5TLZGYbtqd-Ie9U1oWdDjyE",
+            authDomain: "register-sim-card-8765c.firebaseapp.com",
+            projectId: "register-sim-card-8765c",
+            storageBucket: "register-sim-card-8765c.firebasestorage.app",
+            messagingSenderId: "410790102714",
+            appId: "1:410790102714:web:921f4f3eff4543aad1e483"
+        };
+
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
-        const auth = getAuth(app);
 
-        // State Variables
-        let currentUser = null; 
-        let activeTab = 'tab-operations';
-        let deleteTarget = null; 
+        let currentUser = null;
+        let deleteTarget = null;
 
-        // Mappings for Main Operators -> Submarks
         const subOperatorsMap = {
             'PLAY': ['PLAY', 'Virgin Mobile', 'Red Bull Mobile'],
             'Plus': ['Plus', 'Plush', 'Klucz Mobile'],
@@ -600,12 +642,10 @@ const firebaseConfig = {
             'T-Mobile': ['T-Mobile', 'Heyah', 'Mobile Vikings']
         };
 
-        // Cache collections
         let operationsData = [];
         let customersData = [];
         let usersData = [];
 
-        // UI Element References
         const dbStatusBadge = document.getElementById('db-status-badge');
         const dbStatusDot = document.getElementById('db-status-dot');
         const dbStatusText = document.getElementById('db-status-text');
@@ -621,11 +661,9 @@ const firebaseConfig = {
         const adminExistsBox = document.getElementById('admin-exists-box');
         const modalInitAdmin = document.getElementById('modal-init-admin');
 
-        // Firestore Paths (Compliance Rule 1)
         const getPublicCollPath = (collName) => collection(db, 'artifacts', appId, 'public', 'data', collName);
         const getPublicDocPath = (collName, docId) => doc(db, 'artifacts', appId, 'public', 'data', collName, docId);
 
-        // Toast Notification Helper
         function showToast(message, type = 'info') {
             const toast = document.getElementById('toast');
             const toastMsg = document.getElementById('toast-msg');
@@ -644,9 +682,7 @@ const firebaseConfig = {
             setTimeout(() => { toast.classList.add('hidden'); }, 3500);
         }
 
-        // ==========================================
-        // THEME MANAGEMENT (Light / Dark + Firestore Persistence)
-        // ==========================================
+        // ================= THEME =================
         window.toggleTheme = async function() {
             const isDark = document.documentElement.classList.contains('dark');
             const newTheme = isDark ? 'light' : 'dark';
@@ -657,7 +693,7 @@ const firebaseConfig = {
                     await updateDoc(getPublicDocPath('users', currentUser.id), { theme: newTheme });
                     currentUser.theme = newTheme;
                 } catch (err) {
-                    console.error("Błąd zapisu motywu w bazie:", err);
+                    console.error("Błąd zapisu motywu:", err);
                 }
             } else {
                 localStorage.setItem('sim_portal_theme', newTheme);
@@ -675,35 +711,25 @@ const firebaseConfig = {
             }
         }
 
-        // Initialize theme on load
         function initTheme() {
             const savedTheme = localStorage.getItem('sim_portal_theme') || 'dark';
             applyTheme(savedTheme);
         }
 
-        // ==========================================
-        // INITIALIZATION & ADMIN CHECK
-        // ==========================================
+        // ================= INIT & ADMIN CHECK =================
         async function initApp() {
             initTheme();
             try {
-                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                    await signInWithCustomToken(auth, __initial_auth_token);
-                } else {
-                    await signInAnonymously(auth);
-                }
-
                 dbStatusBadge.classList.remove('hidden');
                 dbStatusDot.className = 'w-2 h-2 rounded-full bg-green-500 mr-2';
                 dbStatusText.textContent = 'Firestore Połączono';
 
                 await verifyAdminExistenceInDatabase();
-
             } catch (err) {
-                console.error("Błąd połączenia Firebase:", err);
+                console.error("Błąd Firebase:", err);
                 dbStatusDot.className = 'w-2 h-2 rounded-full bg-red-500 mr-2';
                 dbStatusText.textContent = 'Błąd Bazy Data';
-                showToast("Nie udało się nawiązać połączenia z bazą danych", "error");
+                showToast("Błąd połączenia z bazą danych", "error");
             }
         }
 
@@ -715,12 +741,8 @@ const firebaseConfig = {
             try {
                 const usersSnap = await getDocs(getPublicCollPath('users'));
                 let adminCount = 0;
-
                 usersSnap.forEach(docSnap => {
-                    const u = docSnap.data();
-                    if (u.role === 'admin') {
-                        adminCount++;
-                    }
+                    if (docSnap.data().role === 'admin') adminCount++;
                 });
 
                 adminCheckLoading.classList.add('hidden');
@@ -731,22 +753,20 @@ const firebaseConfig = {
                     adminExistsBox.classList.remove('hidden');
                 }
             } catch (err) {
-                console.error("Błąd podczas sprawdzania obecności administratora:", err);
+                console.error("Błąd sprawdzania admina:", err);
                 adminCheckLoading.innerHTML = `<span class="text-red-500"><i class="fa-solid fa-triangle-exclamation"></i> Błąd odczytu bazy: ${err.message}</span>`;
             }
         }
 
-        // ==========================================
-        // LISTENERY REALTIME DANYCH (ONSNAPSHOT)
-        // ==========================================
+        // ================= REALTIME LISTENERS =================
         function setupDataListeners() {
             onSnapshot(getPublicCollPath('sim_operations'), (snapshot) => {
                 operationsData = [];
                 snapshot.forEach(docSnap => {
                     operationsData.push({ id: docSnap.id, ...docSnap.data() });
                 });
-                renderOperationsTable();
-            }, (err) => showToast("Błąd synchronizacji operacji SIM: " + err.message, "error"));
+                renderOperationsTables();
+            });
 
             onSnapshot(getPublicCollPath('customers'), (snapshot) => {
                 customersData = [];
@@ -755,7 +775,7 @@ const firebaseConfig = {
                 });
                 renderCustomersTable();
                 updateCustomerSelectOptions();
-            }, (err) => showToast("Błąd synchronizacji klientów: " + err.message, "error"));
+            });
 
             onSnapshot(getPublicCollPath('users'), (snapshot) => {
                 usersData = [];
@@ -764,19 +784,17 @@ const firebaseConfig = {
                 });
                 renderUsersTable();
                 verifyAdminExistenceInDatabase();
-            }, (err) => showToast("Błąd synchronizacji użytkowników: " + err.message, "error"));
+            });
         }
 
-        // ==========================================
-        // OBSŁUGA LOGOWANIA & AUTH
-        // ==========================================
+        // ================= AUTHENTICATION =================
         document.getElementById('form-login').addEventListener('submit', async (e) => {
             e.preventDefault();
             const login = document.getElementById('login-input').value.trim();
             const pass = document.getElementById('password-input').value;
 
             if (!login || !pass) {
-                showToast("Wprowadź login i hasło", "error");
+                showToast("Wprowadź login oraz hasło", "error");
                 return;
             }
 
@@ -786,28 +804,29 @@ const firebaseConfig = {
 
                 usersSnap.forEach(docSnap => {
                     const u = docSnap.data();
-                    if (u.login === login || u.phone === login || u.email === login) {
+                    // Sprawdzamy login, email lub numer telefonu (dla abonentów)
+                    if (u.login === login || u.email === login || u.phone === login) {
                         foundUser = { id: docSnap.id, ...u };
                     }
                 });
 
                 if (!foundUser) {
-                    showToast("Nieprawidłowy login, email lub numer telefonu", "error");
+                    showToast("Nie znaleziono użytkownika o takim identyfikatorze", "error");
                     return;
                 }
 
                 if (foundUser.password !== pass) {
-                    showToast("Błędne hasło!", "error");
+                    showToast("Nieprawidłowe hasło!", "error");
                     return;
                 }
 
                 currentUser = foundUser;
 
-                // Load user theme preference if stored in DB
                 if (currentUser.theme) {
                     applyTheme(currentUser.theme);
                 }
 
+                // Sprawdzenie wymogu zmiany hasła (np. dla abonenta z hasłem tymczasowym)
                 if (currentUser.mustChangePassword) {
                     openCertPasswordModal();
                     return;
@@ -826,7 +845,8 @@ const firebaseConfig = {
             userInfoBar.classList.remove('hidden');
 
             userDisplayName.textContent = currentUser.name || currentUser.login;
-            userDisplayRole.textContent = currentUser.role === 'admin' ? 'Administrator' : (currentUser.role === 'advisor' ? 'Doradca SIM' : 'Abonent');
+            const roleLabels = { 'admin': 'Administrator', 'advisor': 'Doradca SIM', 'subscriber': 'Abonent' };
+            userDisplayRole.textContent = roleLabels[currentUser.role] || currentUser.role;
 
             const tabBtnUsers = document.getElementById('tab-btn-users');
             if (currentUser.role === 'admin') {
@@ -836,11 +856,10 @@ const firebaseConfig = {
             }
 
             setupDataListeners();
-            showToast(`Witaj, ${currentUser.name || currentUser.login}!`, "success");
+            showToast(`Zalogowano pomyślnie jako ${currentUser.name || currentUser.login}`, "success");
         }
 
-        document.getElementById('btn-logout').addEventListener('click', logout);
-        function logout() {
+        document.getElementById('btn-logout').addEventListener('click', () => {
             currentUser = null;
             appDashboard.classList.add('hidden');
             userInfoBar.classList.add('hidden');
@@ -848,15 +867,12 @@ const firebaseConfig = {
             document.getElementById('form-login').reset();
             verifyAdminExistenceInDatabase();
             showToast("Wylogowano z systemu", "info");
-        }
+        });
 
-        // ==========================================
-        // INICJALIZACJA PIERWSZEGO ADMINA
-        // ==========================================
+        // ================= ADMIN INITIALIZATION =================
         document.getElementById('btn-show-init-admin').addEventListener('click', () => {
             modalInitAdmin.classList.remove('hidden');
         });
-
         document.getElementById('btn-close-init-modal').addEventListener('click', () => {
             modalInitAdmin.classList.add('hidden');
         });
@@ -868,360 +884,31 @@ const firebaseConfig = {
             const name = document.getElementById('init-admin-name').value.trim();
             const email = document.getElementById('init-admin-email').value.trim();
 
-            if (!login || !pass || !name || !email) {
-                showToast("Wypełnij wszystkie pola formularza!", "error");
-                return;
-            }
-
             try {
                 const usersSnap = await getDocs(getPublicCollPath('users'));
                 let adminCount = 0;
-                usersSnap.forEach(docSnap => {
-                    if (docSnap.data().role === 'admin') adminCount++;
-                });
+                usersSnap.forEach(d => { if (d.data().role === 'admin') adminCount++; });
 
                 if (adminCount > 0) {
-                    showToast("Administrator już istnieje w bazie! Inicjalizacja zablokowana.", "error");
+                    showToast("Administrator już istnieje w bazie!", "error");
                     modalInitAdmin.classList.add('hidden');
-                    verifyAdminExistenceInDatabase();
                     return;
                 }
 
-                const newAdmin = {
-                    login: login,
-                    password: pass,
-                    name: name,
-                    email: email,
-                    role: 'admin',
-                    theme: 'dark',
-                    createdAt: new Date().toISOString()
-                };
+                await addDoc(getPublicCollPath('users'), {
+                    login, password: pass, name, email, role: 'admin', theme: 'dark', mustChangePassword: false, createdAt: new Date().toISOString()
+                });
 
-                await addDoc(getPublicCollPath('users'), newAdmin);
-
-                showToast("Konto administratora zostało pomyślnie utworzone!", "success");
+                showToast("Konto administratora utworzone pomyślnie!", "success");
                 modalInitAdmin.classList.add('hidden');
                 document.getElementById('form-init-admin').reset();
                 verifyAdminExistenceInDatabase();
-
             } catch (err) {
-                showToast("Błąd podczas zapisywania administratora: " + err.message, "error");
+                showToast("Błąd zapisu admina: " + err.message, "error");
             }
         });
 
-        // ==========================================
-        // REJESTRACJA & FORMULARZ SIM OPERATIONS
-        // ==========================================
-        const modalOp = document.getElementById('modal-op');
-        const mainOpSelect = document.getElementById('op-main-operator');
-        const subOpSelect = document.getElementById('op-sub-operator');
-
-        function updateSubOperators() {
-            const mainOp = mainOpSelect.value;
-            const subs = subOperatorsMap[mainOp] || [mainOp];
-            subOpSelect.innerHTML = subs.map(s => `<option value="${s}">${s}</option>`).join('');
-        }
-
-        mainOpSelect.addEventListener('change', updateSubOperators);
-        updateSubOperators();
-
-        document.getElementById('btn-open-new-op').addEventListener('click', () => {
-            document.getElementById('form-op').reset();
-            document.getElementById('op-id').value = '';
-            document.getElementById('modal-op-title').textContent = 'Nowa Rejestracja Karty SIM';
-            updateSubOperators();
-            modalOp.classList.remove('hidden');
-        });
-
-        document.getElementById('btn-close-op-modal').addEventListener('click', () => modalOp.classList.add('hidden'));
-        document.getElementById('btn-cancel-op').addEventListener('click', () => modalOp.classList.add('hidden'));
-
-        document.getElementById('form-op').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const opId = document.getElementById('op-id').value;
-            const customerId = document.getElementById('op-customer-id').value;
-            const mainOperator = document.getElementById('op-main-operator').value;
-            const subOperator = document.getElementById('op-sub-operator').value;
-            const type = document.getElementById('op-type').value;
-            const msisdn = document.getElementById('op-msisdn').value.trim();
-            const iccid = document.getElementById('op-iccid').value.trim();
-            const status = document.getElementById('op-status').value;
-            const notes = document.getElementById('op-notes').value.trim();
-
-            const customerObj = customersData.find(c => c.id === customerId);
-            const customerName = customerObj ? `${customerObj.firstName} ${customerObj.lastName} ${customerObj.companyName ? '('+customerObj.companyName+')' : ''}` : 'Nieznany';
-
-            const payload = {
-                customerId,
-                customerName,
-                mainOperator,
-                subOperator,
-                type,
-                msisdn,
-                iccid,
-                status,
-                notes,
-                createdByName: currentUser ? currentUser.name : 'System',
-                updatedAt: new Date().toISOString()
-            };
-
-            try {
-                if (opId) {
-                    await updateDoc(getPublicDocPath('sim_operations', opId), payload);
-                    showToast("Operacja SIM zaktualizowana", "success");
-                } else {
-                    payload.createdAt = new Date().toISOString();
-                    await addDoc(getPublicCollPath('sim_operations'), payload);
-                    showToast("Nowa rejestracja SIM dodana do bazy", "success");
-                }
-                modalOp.classList.add('hidden');
-            } catch (err) {
-                showToast("Błąd zapisu operacji SIM: " + err.message, "error");
-            }
-        });
-
-        function renderOperationsTable() {
-            const tbody = document.getElementById('table-operations-body');
-            const search = document.getElementById('search-op-input').value.toLowerCase();
-            const filterOp = document.getElementById('filter-operator').value;
-
-            let filtered = operationsData.filter(item => {
-                const matchSearch = (item.msisdn && item.msisdn.toLowerCase().includes(search)) ||
-                                    (item.iccid && item.iccid.toLowerCase().includes(search)) ||
-                                    (item.customerName && item.customerName.toLowerCase().includes(search));
-                const matchOp = filterOp ? (item.subOperator === filterOp || item.mainOperator === filterOp) : true;
-                return matchSearch && matchOp;
-            });
-
-            if (filtered.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="7" class="text-center p-8 text-slate-400">Brak zarejestrowanych operacji SIM spełniających kryteria.</td></tr>`;
-                return;
-            }
-
-            tbody.innerHTML = filtered.map(item => {
-                const dateStr = item.createdAt ? new Date(item.createdAt).toLocaleDateString('pl-PL') : '-';
-                let statusBadge = 'bg-green-100 text-green-700 dark:bg-green-950/50 dark:text-green-300';
-                if (item.status === 'W trakcie realizacji') statusBadge = 'bg-blue-100 text-blue-700 dark:bg-blue-950/50 dark:text-blue-300';
-                if (item.status === 'Oczekuje na aktywację') statusBadge = 'bg-amber-100 text-amber-700 dark:bg-amber-950/50 dark:text-amber-300';
-                if (item.status === 'Odrzucona') statusBadge = 'bg-red-100 text-red-700 dark:bg-red-950/50 dark:text-red-300';
-
-                return `
-                    <tr class="hover:bg-slate-50/80 dark:hover:bg-slate-800/50 transition">
-                        <td class="p-3.5 text-slate-500 dark:text-slate-400 font-mono text-xs">${dateStr}</td>
-                        <td class="p-3.5 font-semibold text-slate-900 dark:text-white">${item.customerName || '-'}</td>
-                        <td class="p-3.5">
-                            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-brand-50 dark:bg-brand-950/50 text-brand-700 dark:text-brand-300 border border-brand-200 dark:border-brand-900">
-                                ${item.subOperator || item.mainOperator}
-                            </span>
-                        </td>
-                        <td class="p-3.5">
-                            <div class="font-mono text-slate-800 dark:text-slate-200 font-bold">${item.msisdn}</div>
-                            <div class="font-mono text-[11px] text-slate-400">${item.iccid || 'Brak ICCID'}</div>
-                        </td>
-                        <td class="p-3.5 text-xs text-slate-600 dark:text-slate-300">${item.type}</td>
-                        <td class="p-3.5">
-                            <span class="px-2.5 py-1 rounded-full text-[11px] font-semibold ${statusBadge}">
-                                ${item.status}
-                            </span>
-                        </td>
-                        <td class="p-3.5 text-right space-x-2">
-                            <button onclick="editOp('${item.id}')" class="text-slate-400 hover:text-brand-600 dark:hover:text-brand-400 p-1" title="Edytuj">
-                                <i class="fa-solid fa-pen-to-square"></i>
-                            </button>
-                            <button onclick="confirmDelete('sim_operations', '${item.id}')" class="text-slate-400 hover:text-red-600 dark:hover:text-red-400 p-1" title="Usuń">
-                                <i class="fa-solid fa-trash-can"></i>
-                            </button>
-                        </td>
-                    </tr>
-                `;
-            }).join('');
-        }
-
-        document.getElementById('search-op-input').addEventListener('input', renderOperationsTable);
-        document.getElementById('filter-operator').addEventListener('change', renderOperationsTable);
-
-        window.editOp = (id) => {
-            const op = operationsData.find(o => o.id === id);
-            if (!op) return;
-
-            document.getElementById('op-id').value = op.id;
-            document.getElementById('op-customer-id').value = op.customerId || '';
-            document.getElementById('op-main-operator').value = op.mainOperator || 'PLAY';
-            updateSubOperators();
-            document.getElementById('op-sub-operator').value = op.subOperator || op.mainOperator;
-            document.getElementById('op-type').value = op.type || 'Rejestracja Nowego Numeru';
-            document.getElementById('op-msisdn').value = op.msisdn || '';
-            document.getElementById('op-iccid').value = op.iccid || '';
-            document.getElementById('op-status').value = op.status || 'Zarejestrowana';
-            document.getElementById('op-notes').value = op.notes || '';
-
-            document.getElementById('modal-op-title').textContent = 'Edycja Rejestracji SIM';
-            modalOp.classList.remove('hidden');
-        };
-
-        // ==========================================
-        // KLIENCI (CUSTOMERS) HANDLERS
-        // ==========================================
-        const modalCustomer = document.getElementById('modal-customer');
-
-        document.getElementById('btn-add-customer-modal').addEventListener('click', () => {
-            document.getElementById('form-customer').reset();
-            modalCustomer.classList.remove('hidden');
-        });
-
-        document.getElementById('btn-close-cust-modal').addEventListener('click', () => modalCustomer.classList.add('hidden'));
-        document.getElementById('btn-cancel-cust').addEventListener('click', () => modalCustomer.classList.add('hidden'));
-
-        document.querySelectorAll('input[name="cust-type"]').forEach(radio => {
-            radio.addEventListener('change', (e) => {
-                const companyFields = document.getElementById('cust-company-fields');
-                if (e.target.value === 'company') {
-                    companyFields.classList.remove('hidden');
-                } else {
-                    companyFields.classList.add('hidden');
-                }
-            });
-        });
-
-        document.getElementById('form-customer').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const isCompany = document.querySelector('input[name="cust-type"]:checked').value === 'company';
-            const firstName = document.getElementById('cust-fname').value.trim();
-            const lastName = document.getElementById('cust-lname').value.trim();
-            const companyName = isCompany ? document.getElementById('cust-company-name').value.trim() : '';
-            const nip = isCompany ? document.getElementById('cust-nip').value.trim() : '';
-            const pesel = document.getElementById('cust-pesel').value.trim();
-            const docNumber = document.getElementById('cust-doc-num').value.trim();
-            const email = document.getElementById('cust-email').value.trim();
-            const phone = document.getElementById('cust-phone').value.trim();
-            const address = document.getElementById('cust-address').value.trim();
-
-            const newCust = {
-                firstName,
-                lastName,
-                isCompany,
-                companyName,
-                nip,
-                pesel,
-                docNumber,
-                email,
-                phone,
-                address,
-                createdAt: new Date().toISOString()
-            };
-
-            try {
-                await addDoc(getPublicCollPath('customers'), newCust);
-                showToast("Klient pomyślnie dodany", "success");
-                modalCustomer.classList.add('hidden');
-            } catch (err) {
-                showToast("Błąd zapisywania klienta: " + err.message, "error");
-            }
-        });
-
-        function renderCustomersTable() {
-            const tbody = document.getElementById('table-customers-body');
-            if (customersData.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" class="text-center p-6 text-slate-400">Brak zarejestrowanych klientów w bazie.</td></tr>`;
-                return;
-            }
-
-            tbody.innerHTML = customersData.map(c => `
-                <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition">
-                    <td class="p-3 font-semibold text-slate-900 dark:text-white">
-                        ${c.firstName} ${c.lastName}
-                        ${c.companyName ? `<div class="text-xs text-brand-600 dark:text-brand-400 font-normal"><i class="fa-solid fa-building mr-1"></i>${c.companyName}</div>` : ''}
-                    </td>
-                    <td class="p-3 font-mono text-xs text-slate-600 dark:text-slate-300">
-                        ${c.pesel ? `PESEL: ${c.pesel}` : ''}
-                        ${c.nip ? `<div>NIP: ${c.nip}</div>` : ''}
-                    </td>
-                    <td class="p-3 text-xs font-mono text-slate-600 dark:text-slate-400">${c.docNumber || '-'}</td>
-                    <td class="p-3 text-xs text-slate-600 dark:text-slate-300">
-                        <div>${c.phone || '-'}</div>
-                        <div class="text-slate-400">${c.email || ''}</div>
-                    </td>
-                    <td class="p-3 text-xs text-slate-600 dark:text-slate-300 max-w-xs truncate">${c.address || '-'}</td>
-                    <td class="p-3 text-right">
-                        <button onclick="confirmDelete('customers', '${c.id}')" class="text-slate-400 hover:text-red-600 dark:hover:text-red-400 p-1">
-                            <i class="fa-solid fa-trash-can"></i>
-                        </button>
-                    </td>
-                </tr>
-            `).join('');
-        }
-
-        function updateCustomerSelectOptions() {
-            const select = document.getElementById('op-customer-id');
-            select.innerHTML = `<option value="">-- Wybierz klienta z bazy --</option>` + 
-                customersData.map(c => `<option value="${c.id}">${c.firstName} ${c.lastName} ${c.companyName ? '('+c.companyName+')' : ''} - ${c.pesel || c.nip || 'Brak ID'}</option>`).join('');
-        }
-
-        // ==========================================
-        // UŻYTKOWNICY SYSTEMOWI (ADMIN PANEL)
-        // ==========================================
-        function renderUsersTable() {
-            const tbody = document.getElementById('table-users-body');
-            if (usersData.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="5" class="text-center p-6 text-slate-400">Brak użytkowników.</td></tr>`;
-                return;
-            }
-
-            tbody.innerHTML = usersData.map(u => `
-                <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition">
-                    <td class="p-3 font-mono text-xs font-bold text-slate-800 dark:text-white">${u.login}</td>
-                    <td class="p-3 text-slate-800 dark:text-slate-200 font-medium">${u.name || '-'}</td>
-                    <td class="p-3">
-                        <span class="px-2 py-0.5 rounded text-[11px] font-bold ${u.role === 'admin' ? 'bg-amber-100 text-amber-800 dark:bg-amber-950/60 dark:text-amber-300' : 'bg-blue-100 text-blue-800 dark:bg-blue-950/60 dark:text-blue-300'}">
-                            ${u.role === 'admin' ? 'Administrator' : 'Doradca'}
-                        </span>
-                    </td>
-                    <td class="p-3 text-xs text-slate-500 dark:text-slate-400">${u.email || '-'}</td>
-                    <td class="p-3 text-right">
-                        <button onclick="confirmDelete('users', '${u.id}')" class="text-slate-400 hover:text-red-600 dark:hover:text-red-400 p-1">
-                            <i class="fa-solid fa-trash-can"></i>
-                        </button>
-                    </td>
-                </tr>
-            `).join('');
-        }
-
-        // ==========================================
-        // SYSTEM POTWIERDZENIA USUNIĘCIA
-        // ==========================================
-        const modalConfirmDelete = document.getElementById('modal-confirm-delete');
-
-        window.confirmDelete = (collectionName, docId) => {
-            deleteTarget = { collectionName, docId };
-            modalConfirmDelete.classList.remove('hidden');
-        };
-
-        document.getElementById('btn-delete-cancel').addEventListener('click', () => {
-            modalConfirmDelete.classList.add('hidden');
-            deleteTarget = null;
-        });
-
-        document.getElementById('btn-delete-confirm').addEventListener('click', async () => {
-            if (!deleteTarget) return;
-
-            try {
-                await deleteDoc(getPublicDocPath(deleteTarget.collectionName, deleteTarget.docId));
-                showToast("Rekord został pomyślnie usunięty z bazy", "success");
-
-                if (deleteTarget.collectionName === 'users') {
-                    verifyAdminExistenceInDatabase();
-                }
-            } catch (err) {
-                showToast("Błąd podczas usuwania rekordu: " + err.message, "error");
-            } finally {
-                modalConfirmDelete.classList.add('hidden');
-                deleteTarget = null;
-            }
-        });
-
-        // ==========================================
-        // CERT POLSKA PASSWORD VERIFICATION
-        // ==========================================
+        // ================= CERT POLSKA PASSWORD MODAL =================
         const modalCertPass = document.getElementById('modal-cert-password');
         const certPass1 = document.getElementById('cert-pass-1');
         const certPass2 = document.getElementById('cert-pass-2');
@@ -1251,9 +938,7 @@ const firebaseConfig = {
             updateRuleUI('rule-num', hasNum);
             updateRuleUI('rule-spec', hasSpec);
 
-            const allValid = hasLen && hasUpper && hasLower && hasNum && hasSpec && match;
-
-            if (allValid) {
+            if (hasLen && hasUpper && hasLower && hasNum && hasSpec && match) {
                 btnSaveCertPass.disabled = false;
                 btnSaveCertPass.className = "w-full py-2.5 bg-brand-500 hover:bg-brand-600 text-white font-semibold text-sm rounded-xl shadow transition cursor-pointer";
             } else {
@@ -1288,29 +973,303 @@ const firebaseConfig = {
                 currentUser.password = certPass1.value;
 
                 modalCertPass.classList.add('hidden');
-                showToast("Hasło zostało zmienione zgodnie z wymogami CERT Polska", "success");
+                showToast("Hasło zostało pomyślnie zmienione zgodnie z wymogami CERT Polska", "success");
                 loginSuccess();
             } catch (err) {
                 showToast("Błąd zmiany hasła: " + err.message, "error");
             }
         });
 
-        // Tab Switching
+        // ================= TAB SWITCHING =================
         document.querySelectorAll('.tab-btn').forEach(btn => {
             btn.addEventListener('click', () => {
-                const targetTab = btn.getAttribute('data-tab');
-
+                const target = btn.getAttribute('data-tab');
                 document.querySelectorAll('.tab-btn').forEach(b => {
                     b.classList.remove('active-tab', 'bg-slate-200', 'dark:bg-slate-800', 'text-slate-900', 'dark:text-white');
                 });
                 btn.classList.add('active-tab', 'bg-slate-200', 'dark:bg-slate-800', 'text-slate-900', 'dark:text-white');
 
                 document.querySelectorAll('.tab-content').forEach(tc => tc.classList.add('hidden'));
-                document.getElementById(targetTab).classList.remove('hidden');
+                document.getElementById(target).classList.remove('hidden');
             });
         });
 
-        // Initialize on Load
+        // ================= OPERATIONS / SIM REGISTRATION =================
+        const modalOp = document.getElementById('modal-op');
+        const mainOpSelect = document.getElementById('op-main-operator');
+        const subOpSelect = document.getElementById('op-sub-operator');
+
+        function updateSubOperators() {
+            const main = mainOpSelect.value;
+            const subs = subOperatorsMap[main] || [main];
+            subOpSelect.innerHTML = subs.map(s => `<option value="${s}">${s}</option>`).join('');
+        }
+        mainOpSelect.addEventListener('change', updateSubOperators);
+        updateSubOperators();
+
+        window.openOperationModal = (defaultType = 'Rejestracja Nowego Numeru') => {
+            document.getElementById('form-op').reset();
+            document.getElementById('op-id').value = '';
+            document.getElementById('op-type').value = defaultType;
+            updateSubOperators();
+            document.getElementById('modal-op-title').textContent = `Obsługa: ${defaultType}`;
+            modalOp.classList.remove('hidden');
+        };
+
+        document.getElementById('btn-open-new-op').addEventListener('click', () => openOperationModal('Rejestracja Nowego Numeru'));
+        document.getElementById('btn-close-op-modal').addEventListener('click', () => modalOp.classList.add('hidden'));
+        document.getElementById('btn-cancel-op').addEventListener('click', () => modalOp.classList.add('hidden'));
+
+        document.getElementById('form-op').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const opId = document.getElementById('op-id').value;
+            const customerId = document.getElementById('op-customer-id').value;
+            const mainOperator = document.getElementById('op-main-operator').value;
+            const subOperator = document.getElementById('op-sub-operator').value;
+            const type = document.getElementById('op-type').value;
+            const msisdn = document.getElementById('op-msisdn').value.trim();
+            const iccid = document.getElementById('op-iccid').value.trim();
+            const status = document.getElementById('op-status').value;
+            const notes = document.getElementById('op-notes').value.trim();
+
+            const customerObj = customersData.find(c => c.id === customerId);
+            const customerName = customerObj ? `${customerObj.firstName} ${customerObj.lastName} ${customerObj.companyName ? '('+customerObj.companyName+')' : ''}` : 'Nieznany';
+
+            const payload = {
+                customerId, customerName, mainOperator, subOperator, type, msisdn, iccid, status, notes,
+                createdByName: currentUser ? currentUser.name : 'System',
+                updatedAt: new Date().toISOString()
+            };
+
+            try {
+                if (opId) {
+                    await updateDoc(getPublicDocPath('sim_operations', opId), payload);
+                    showToast("Operacja zaktualizowana", "success");
+                } else {
+                    payload.createdAt = new Date().toISOString();
+                    await addDoc(getPublicCollPath('sim_operations'), payload);
+                    showToast("Operacja zarejestrowana w bazie", "success");
+                }
+                modalOp.classList.add('hidden');
+            } catch (err) {
+                showToast("Błąd zapisu operacji: " + err.message, "error");
+            }
+        });
+
+        function renderOperationsTables() {
+            const simRegBody = document.getElementById('table-sim-reg-body');
+            const mnpBody = document.getElementById('table-mnp-body');
+            const cesjaBody = document.getElementById('table-cesja-body');
+
+            const simRegList = operationsData.filter(o => o.type === 'Rejestracja Nowego Numeru');
+            const mnpList = operationsData.filter(o => o.type === 'MNP (Przeniesienie Numeru)');
+            const cesjaList = operationsData.filter(o => o.type === 'Cesja Numeru' || o.type === 'Karta na Abonament');
+
+            simRegBody.innerHTML = renderTableRows(simRegList, 'sim-reg');
+            mnpBody.innerHTML = renderTableRows(mnpList, 'mnp');
+            cesjaBody.innerHTML = renderTableRows(cesjaList, 'cesja');
+        }
+
+        function renderTableRows(list) {
+            if (list.length === 0) {
+                return `<tr><td colspan="6" class="text-center p-6 text-slate-400">Brak zarejestrowanych operacji w tej kategorii</td></tr>`;
+            }
+
+            return list.map(item => {
+                const dateStr = item.createdAt ? new Date(item.createdAt).toLocaleDateString('pl-PL') : '-';
+                return `
+                    <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition">
+                        <td class="p-3 text-xs font-mono text-slate-500">${dateStr}</td>
+                        <td class="p-3 font-semibold text-slate-900 dark:text-white">${item.customerName}</td>
+                        <td class="p-3">
+                            <span class="px-2 py-0.5 rounded text-xs font-semibold bg-brand-50 dark:bg-brand-950/50 text-brand-700 dark:text-brand-300 border border-brand-200 dark:border-brand-900">
+                                ${item.subOperator || item.mainOperator}
+                            </span>
+                        </td>
+                        <td class="p-3 font-mono text-xs">
+                            <div class="font-bold">${item.msisdn}</div>
+                            <div class="text-slate-400 text-[10px]">${item.iccid || item.type}</div>
+                        </td>
+                        <td class="p-3 text-xs">
+                            <span class="px-2 py-1 rounded-full font-medium bg-green-100 text-green-700 dark:bg-green-950/50 dark:text-green-300">
+                                ${item.status}
+                            </span>
+                        </td>
+                        <td class="p-3 text-right space-x-1">
+                            <button onclick="editOp('${item.id}')" class="text-slate-400 hover:text-brand-600 p-1" title="Edytuj"><i class="fa-solid fa-pen"></i></button>
+                            <button onclick="confirmDelete('sim_operations', '${item.id}')" class="text-slate-400 hover:text-red-600 p-1" title="Usuń"><i class="fa-solid fa-trash"></i></button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        window.editOp = (id) => {
+            const op = operationsData.find(o => o.id === id);
+            if (!op) return;
+
+            document.getElementById('op-id').value = op.id;
+            document.getElementById('op-customer-id').value = op.customerId || '';
+            document.getElementById('op-main-operator').value = op.mainOperator || 'PLAY';
+            updateSubOperators();
+            document.getElementById('op-sub-operator').value = op.subOperator || op.mainOperator;
+            document.getElementById('op-type').value = op.type || 'Rejestracja Nowego Numeru';
+            document.getElementById('op-msisdn').value = op.msisdn || '';
+            document.getElementById('op-iccid').value = op.iccid || '';
+            document.getElementById('op-status').value = op.status || 'Zarejestrowana';
+            document.getElementById('op-notes').value = op.notes || '';
+
+            document.getElementById('modal-op-title').textContent = `Edycja: ${op.type}`;
+            modalOp.classList.remove('hidden');
+        };
+
+        // ================= CUSTOMERS MANAGEMENT =================
+        const modalCustomer = document.getElementById('modal-customer');
+
+        document.getElementById('btn-add-customer-modal').addEventListener('click', () => {
+            document.getElementById('form-customer').reset();
+            modalCustomer.classList.remove('hidden');
+        });
+        document.getElementById('btn-close-cust-modal').addEventListener('click', () => modalCustomer.classList.add('hidden'));
+        document.getElementById('btn-cancel-cust').addEventListener('click', () => modalCustomer.classList.add('hidden'));
+
+        document.querySelectorAll('input[name="cust-type"]').forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                const compFields = document.getElementById('cust-company-fields');
+                if (e.target.value === 'company') compFields.classList.remove('hidden');
+                else compFields.classList.add('hidden');
+            });
+        });
+
+        document.getElementById('form-customer').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const isCompany = document.querySelector('input[name="cust-type"]:checked').value === 'company';
+            const firstName = document.getElementById('cust-fname').value.trim();
+            const lastName = document.getElementById('cust-lname').value.trim();
+            const companyName = isCompany ? document.getElementById('cust-company-name').value.trim() : '';
+            const nip = isCompany ? document.getElementById('cust-nip').value.trim() : '';
+            const pesel = document.getElementById('cust-pesel').value.trim();
+            const docNumber = document.getElementById('cust-doc-num').value.trim();
+            const email = document.getElementById('cust-email').value.trim();
+            const phone = document.getElementById('cust-phone').value.trim();
+            const address = document.getElementById('cust-address').value.trim();
+
+            const newCust = { firstName, lastName, isCompany, companyName, nip, pesel, docNumber, email, phone, address, createdAt: new Date().toISOString() };
+
+            try {
+                const docRef = await addDoc(getPublicCollPath('customers'), newCust);
+
+                // Automatyczne utworzenie konta abonenta z hasłem tymczasowym jeśli podano telefon
+                if (phone) {
+                    const tempPassword = 'Temp' + Math.floor(100000 + Math.random() * 900000) + '!A';
+                    await addDoc(getPublicCollPath('users'), {
+                        login: phone,
+                        phone: phone,
+                        password: tempPassword,
+                        name: `${firstName} ${lastName}`,
+                        email: email || `${phone}@abonent.pl`,
+                        role: 'subscriber',
+                        mustChangePassword: true,
+                        theme: 'dark',
+                        createdAt: new Date().toISOString()
+                    });
+                    showToast(`Klient dodany! Tymczasowe hasło dla abonenta (${phone}): ${tempPassword}`, "success");
+                } else {
+                    showToast("Klient pomyślnie dodany do bazy", "success");
+                }
+
+                modalCustomer.classList.add('hidden');
+            } catch (err) {
+                showToast("Błąd zapisu klienta: " + err.message, "error");
+            }
+        });
+
+        function renderCustomersTable() {
+            const tbody = document.getElementById('table-customers-body');
+            if (customersData.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="text-center p-6 text-slate-400">Brak klientów w bazie</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = customersData.map(c => `
+                <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition">
+                    <td class="p-3 font-semibold text-slate-900 dark:text-white">
+                        ${c.firstName} ${c.lastName}
+                        ${c.companyName ? `<div class="text-xs text-brand-600 dark:text-brand-400 font-normal"><i class="fa-solid fa-building mr-1"></i>${c.companyName}</div>` : ''}
+                    </td>
+                    <td class="p-3 font-mono text-xs text-slate-600 dark:text-slate-300">
+                        ${c.pesel ? `PESEL: ${c.pesel}` : ''}
+                        ${c.nip ? `<div>NIP: ${c.nip}</div>` : ''}
+                    </td>
+                    <td class="p-3 text-xs font-mono text-slate-600 dark:text-slate-400">${c.docNumber || '-'}</td>
+                    <td class="p-3 text-xs text-slate-600 dark:text-slate-300">
+                        <div>${c.phone || '-'}</div>
+                        <div class="text-slate-400">${c.email || ''}</div>
+                    </td>
+                    <td class="p-3 text-xs text-slate-600 dark:text-slate-300 max-w-xs truncate">${c.address || '-'}</td>
+                    <td class="p-3 text-right">
+                        <button onclick="confirmDelete('customers', '${c.id}')" class="text-slate-400 hover:text-red-600 p-1"><i class="fa-solid fa-trash"></i></button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function updateCustomerSelectOptions() {
+            const select = document.getElementById('op-customer-id');
+            select.innerHTML = `<option value="">-- Wybierz klienta z bazy --</option>` + 
+                customersData.map(c => `<option value="${c.id}">${c.firstName} ${c.lastName} ${c.companyName ? '('+c.companyName+')' : ''} - ${c.pesel || c.nip || c.phone || 'Brak ID'}</option>`).join('');
+        }
+
+        // ================= USERS MANAGEMENT (ADMIN) =================
+        function renderUsersTable() {
+            const tbody = document.getElementById('table-users-body');
+            if (usersData.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" class="text-center p-6 text-slate-400">Brak użytkowników</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = usersData.map(u => `
+                <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition">
+                    <td class="p-3 font-mono text-xs font-bold text-slate-800 dark:text-white">${u.login}</td>
+                    <td class="p-3 text-slate-800 dark:text-slate-200 font-medium">${u.name || '-'}</td>
+                    <td class="p-3">
+                        <span class="px-2 py-0.5 rounded text-[11px] font-bold ${u.role === 'admin' ? 'bg-amber-100 text-amber-800' : (u.role === 'advisor' ? 'bg-blue-100 text-blue-800' : 'bg-emerald-100 text-emerald-800')}">
+                            ${u.role}
+                        </span>
+                    </td>
+                    <td class="p-3 text-xs text-slate-500">${u.email || '-'}</td>
+                    <td class="p-3 text-right">
+                        <button onclick="confirmDelete('users', '${u.id}')" class="text-slate-400 hover:text-red-600 p-1"><i class="fa-solid fa-trash"></i></button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // ================= DELETE CONFIRMATION =================
+        const modalConfirmDelete = document.getElementById('modal-confirm-delete');
+        window.confirmDelete = (coll, id) => {
+            deleteTarget = { coll, id };
+            modalConfirmDelete.classList.remove('hidden');
+        };
+        document.getElementById('btn-delete-cancel').addEventListener('click', () => {
+            modalConfirmDelete.classList.add('hidden');
+            deleteTarget = null;
+        });
+        document.getElementById('btn-delete-confirm').addEventListener('click', async () => {
+            if (!deleteTarget) return;
+            try {
+                await deleteDoc(getPublicDocPath(deleteTarget.coll, deleteTarget.id));
+                showToast("Usunięto pomyślnie z bazy", "success");
+                if (deleteTarget.coll === 'users') verifyAdminExistenceInDatabase();
+            } catch (err) {
+                showToast("Błąd usuwania: " + err.message, "error");
+            } finally {
+                modalConfirmDelete.classList.add('hidden');
+                deleteTarget = null;
+            }
+        });
+
+        // Initialize App on Load
         window.addEventListener('DOMContentLoaded', initApp);
     </script>
 </body>
