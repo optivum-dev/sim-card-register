@@ -575,15 +575,14 @@
 
         // Global app configuration & Firebase config provided by user snippet
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'register-sim-card-8765c';
-        const firebaseConfig = {
-            apiKey: "AIzaSyCHhUMjx-8B5TLZGYbtqd-Ie9U1oWdDjyE",
-            authDomain: "register-sim-card-8765c.firebaseapp.com",
-            projectId: "register-sim-card-8765c",
-            storageBucket: "register-sim-card-8765c.firebasestorage.app",
-            messagingSenderId: "410790102714",
-            appId: "1:410790102714:web:921f4f3eff4543aad1e483"
-        };
-
+const firebaseConfig = {
+    apiKey: "AIzaSyCHhUMjx-8B5TLZGYbtqd-Ie9U1oWdDjyE",
+    authDomain: "register-sim-card-8765c.firebaseapp.com",
+    projectId: "register-sim-card-8765c",
+    storageBucket: "register-sim-card-8765c.firebasestorage.app",
+    messagingSenderId: "410790102714",
+    appId: "1:410790102714:web:921f4f3eff4543aad1e483"
+  };
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
         const auth = getAuth(app);
