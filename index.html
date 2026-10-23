@@ -184,6 +184,54 @@
             </div>
         </div>
 
+        <!-- MODAL: DODAWANIE / EDYCJA DORADCY / PRACOWNIKA -->
+        <div id="modal-add-user" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+            <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl max-w-md w-full p-6 border border-slate-200 dark:border-slate-800 relative">
+                <button id="btn-close-user-modal" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+                <div class="text-center mb-5">
+                    <div class="w-12 h-12 bg-brand-50 dark:bg-brand-950 text-brand-500 rounded-2xl mx-auto flex items-center justify-center text-xl mb-2">
+                        <i class="fa-solid fa-user-plus"></i>
+                    </div>
+                    <h3 id="modal-user-title" class="text-lg font-bold text-slate-900 dark:text-white">Rejestracja Konta Pracownika</h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">Utwórz lub edytuj konto doradcy/administratora</p>
+                </div>
+
+                <form id="form-add-user" class="space-y-4">
+                    <input type="hidden" id="edit-user-id">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase mb-1">Login *</label>
+                        <input type="text" id="new-user-login" required placeholder="np. doradca2" class="w-full px-3 py-2 text-sm bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-brand-500 outline-none text-slate-900 dark:text-slate-100">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase mb-1">Imię i Nazwisko *</label>
+                        <input type="text" id="new-user-name" required placeholder="np. Anna Nowak" class="w-full px-3 py-2 text-sm bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-brand-500 outline-none text-slate-900 dark:text-slate-100">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase mb-1">Adres E-mail *</label>
+                        <input type="email" id="new-user-email" required placeholder="anna.nowak@firma.pl" class="w-full px-3 py-2 text-sm bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-brand-500 outline-none text-slate-900 dark:text-slate-100">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase mb-1">Rola w Systemie *</label>
+                        <select id="new-user-role" class="w-full px-3 py-2 text-sm bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-brand-500 outline-none text-slate-900 dark:text-slate-100">
+                            <option value="advisor">Doradca SIM</option>
+                            <option value="admin">Administrator</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase mb-1">Hasło początkowe *</label>
+                        <input type="password" id="new-user-pass" required placeholder="Silne hasło (min. 12 znaków)" class="w-full px-3 py-2 text-sm bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-brand-500 outline-none text-slate-900 dark:text-slate-100">
+                    </div>
+
+                    <div class="pt-2 flex space-x-3">
+                        <button type="button" id="btn-cancel-user-modal" class="flex-1 py-2 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-sm font-medium rounded-xl">Anuluj</button>
+                        <button type="submit" class="flex-1 py-2 bg-brand-500 hover:bg-brand-600 text-white font-semibold text-sm rounded-xl shadow transition">Zapisz Konto</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
         <!-- ZMIANA HASŁA PIERWSZEGO LOGOWANIA (CERT POLSKA RULES) -->
         <div id="modal-cert-password" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
             <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl max-w-md w-full p-6 border border-slate-200 dark:border-slate-800">
@@ -242,7 +290,6 @@
                     <div class="flex justify-between items-center"><span class="font-semibold">Telefon:</span> <span id="info-modal-phone" class="font-mono text-slate-900 dark:text-slate-100"></span></div>
                 </div>
 
-                <!-- Sekcja zarządzania hasłem (Opcje Zmiana hasła / Restart hasła) -->
                 <div class="space-y-3 pt-2 border-t border-slate-100 dark:border-slate-800">
                     <div class="flex items-center justify-between">
                         <h4 class="text-xs font-bold uppercase text-slate-700 dark:text-slate-300">Bezpieczeństwo konta</h4>
@@ -253,9 +300,8 @@
                         <button type="button" onclick="switchPasswordTab('restart')" id="btn-tab-restart" class="flex-1 py-1.5 px-2 bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-semibold rounded-lg transition">Restart hasła</button>
                     </div>
 
-                    <!-- OPCJA 1: Zmiana hasła (wymaga obecnego hasła, bez wylogowania) -->
+                    <!-- OPCJA 1: Zmiana hasła -->
                     <form id="form-user-change-pass" class="space-y-3 pt-2">
-                        <p class="text-[11px] text-slate-500 dark:text-slate-400">Podaj obecne oraz nowe hasło. Zmiana wejdzie w życie natychmiast bez wylogowania.</p>
                         <div>
                             <label class="block text-[11px] font-semibold text-slate-700 dark:text-slate-300 uppercase mb-1">Obecne hasło</label>
                             <input type="password" id="ch-current-pass" required class="w-full px-2.5 py-1.5 text-xs bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg outline-none text-slate-900 dark:text-slate-100">
@@ -271,9 +317,8 @@
                         <button type="submit" id="btn-submit-change" disabled class="w-full py-2 bg-slate-300 dark:bg-slate-800 text-slate-500 font-semibold text-xs rounded-lg transition cursor-not-allowed">Zmień hasło</button>
                     </form>
 
-                    <!-- OPCJA 2: Restart hasła (z wylogowaniem po 5s) -->
+                    <!-- OPCJA 2: Restart hasła -->
                     <form id="form-user-restart-pass" class="space-y-3 pt-2 hidden">
-                        <p class="text-[11px] text-slate-500 dark:text-slate-400">Restart hasła wymusi ponowne logowanie po zapisaniu nowych danych.</p>
                         <div>
                             <label class="block text-[11px] font-semibold text-slate-700 dark:text-slate-300 uppercase mb-1">Nowe hasło</label>
                             <input type="password" id="res-pass-1" required class="w-full px-2.5 py-1.5 text-xs bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg outline-none text-slate-900 dark:text-slate-100">
@@ -288,7 +333,7 @@
             </div>
         </div>
 
-        <!-- PLYWAJĄCE OKIENKO ODLICZANIA DO WYLOGOWANIA (5 SEKUND) -->
+        <!-- PŁYWAJĄCE OKIENKO ODLICZANIA DO WYLOGOWANIA -->
         <div id="modal-logout-countdown" class="hidden fixed inset-0 bg-slate-900/70 backdrop-blur-md z-50 flex items-center justify-center p-4">
             <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl max-w-sm w-full p-6 text-center border border-slate-200 dark:border-slate-800 space-y-4">
                 <div class="w-14 h-14 bg-amber-100 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 rounded-2xl mx-auto flex items-center justify-center text-2xl animate-pulse">
@@ -305,11 +350,17 @@
         <!-- GLÓWNY PANEL PO ZALOGOWANIU -->
         <div id="app-dashboard" class="hidden space-y-6">
 
-            <!-- Zakładki Nawigacyjne -->
-            <div class="flex flex-wrap items-center justify-between gap-4 bg-white dark:bg-slate-900 p-2 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm transition-colors duration-200">
+            <!-- Zakładki Nawigacyjne (Admin / Doradca) - BEZ OPCJI SKŁADANIA WNIOSKÓW -->
+            <div id="nav-tabs-staff" class="flex flex-wrap items-center justify-between gap-4 bg-white dark:bg-slate-900 p-2 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm transition-colors duration-200">
                 <div class="flex flex-wrap space-x-1 sm:space-x-2 gap-y-1">
                     <button data-tab="tab-sim-reg" class="tab-btn px-4 py-2 text-sm font-medium rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition active-tab bg-slate-200 dark:bg-slate-800 text-slate-900 dark:text-white">
                         <i class="fa-solid fa-sim-card mr-1.5"></i> Rejestracja karty numeru
+                    </button>
+                    <button data-tab="tab-system-requests" class="tab-btn px-4 py-2 text-sm font-medium rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+                        <i class="fa-solid fa-list-check mr-1.5"></i> Wnioski systemowe
+                    </button>
+                    <button data-tab="tab-phone-numbers" class="tab-btn px-4 py-2 text-sm font-medium rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+                        <i class="fa-solid fa-phone mr-1.5"></i> Numery telefonów
                     </button>
                     <button data-tab="tab-mnp" class="tab-btn px-4 py-2 text-sm font-medium rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
                         <i class="fa-solid fa-right-left mr-1.5"></i> Przenoszenie numeru
@@ -318,7 +369,7 @@
                         <i class="fa-solid fa-file-contract mr-1.5"></i> Cesja numeru
                     </button>
                     <button data-tab="tab-customers" class="tab-btn px-4 py-2 text-sm font-medium rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
-                        <i class="fa-solid fa-user-plus mr-1.5"></i> Dodawanie klienta
+                        <i class="fa-solid fa-user-plus mr-1.5"></i> Klienci
                     </button>
                     <button id="tab-btn-users" data-tab="tab-users" class="tab-btn hidden px-4 py-2 text-sm font-medium rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
                         <i class="fa-solid fa-user-shield mr-1.5"></i> Pracownicy
@@ -332,8 +383,20 @@
                 </div>
             </div>
 
+            <!-- Zakładki Nawigacyjne (Abonent) -->
+            <div id="nav-tabs-subscriber" class="hidden flex flex-wrap items-center justify-between gap-4 bg-white dark:bg-slate-900 p-2 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm transition-colors duration-200">
+                <div class="flex flex-wrap space-x-1 sm:space-x-2 gap-y-1">
+                    <button data-tab="tab-sub-requests" class="tab-btn-sub px-4 py-2 text-sm font-medium rounded-xl bg-slate-200 dark:bg-slate-800 text-slate-900 dark:text-white transition">
+                        <i class="fa-solid fa-folder-open mr-1.5"></i> Moje Wnioski
+                    </button>
+                    <button data-tab="tab-sub-new-request" class="tab-btn-sub px-4 py-2 text-sm font-medium rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+                        <i class="fa-solid fa-file-circle-plus mr-1.5"></i> Złóż Wniosek
+                    </button>
+                </div>
+            </div>
+
             <!-- ZAKŁADKA 1: REJESTRACJA KARTY NUMERU -->
-            <div id="tab-sim-reg" class="tab-content space-y-4">
+            <div id="tab-sim-reg" class="tab-content staff-content space-y-4">
                 <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden p-4 sm:p-6 transition-colors duration-200">
                     <div class="flex justify-between items-center mb-4">
                         <div>
@@ -364,8 +427,69 @@
                 </div>
             </div>
 
+            <!-- ZAKŁADKA: WNIOSKI SYSTEMOWE (Dla Admina / Doradcy - Realne sprawdzanie i akceptacja/odrzucenie) -->
+            <div id="tab-system-requests" class="tab-content staff-content hidden space-y-4">
+                <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-4 sm:p-6 transition-colors duration-200">
+                    <div class="flex justify-between items-center mb-4">
+                        <div>
+                            <h3 class="font-bold text-slate-900 dark:text-white text-lg">Wnioski systemowe</h3>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">Przeglądaj wnioski nadesłane przez abonentów, zatwierdzaj je lub odrzucaj</p>
+                        </div>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-sm">
+                            <thead class="bg-slate-100 dark:bg-slate-800/80 text-slate-600 dark:text-slate-300 uppercase text-[11px] font-semibold">
+                                <tr>
+                                    <th class="p-3">Data</th>
+                                    <th class="p-3">Abonent</th>
+                                    <th class="p-3">Typ Wniosku</th>
+                                    <th class="p-3">Operator</th>
+                                    <th class="p-3">MSISDN</th>
+                                    <th class="p-3">Status</th>
+                                    <th class="p-3 text-right">Zarządzaj (Akceptuj / Odrzuć)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="table-system-requests-body" class="divide-y divide-slate-100 dark:divide-slate-800">
+                                <tr><td colspan="7" class="text-center p-6 text-slate-400">Sprawdzanie wniosków w bazie...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ZAKŁADKA: NUMERY TELEFONÓW W BAZIE -->
+            <div id="tab-phone-numbers" class="tab-content staff-content hidden space-y-4">
+                <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-4 sm:p-6 transition-colors duration-200">
+                    <div class="flex justify-between items-center mb-4">
+                        <div>
+                            <h3 class="font-bold text-slate-900 dark:text-white text-lg">Baza Numerów Telefonów</h3>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">Zarządzaj pulą numerów MSISDN w systemie</p>
+                        </div>
+                        <button onclick="openPhoneModal()" class="px-3 py-2 bg-brand-500 hover:bg-brand-600 text-white text-xs font-semibold rounded-xl transition">
+                            <i class="fa-solid fa-plus mr-1"></i> Dodaj Numer
+                        </button>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-sm">
+                            <thead class="bg-slate-100 dark:bg-slate-800/80 text-slate-600 dark:text-slate-300 uppercase text-[11px] font-semibold">
+                                <tr>
+                                    <th class="p-3">Numer (MSISDN)</th>
+                                    <th class="p-3">Operator</th>
+                                    <th class="p-3">Status</th>
+                                    <th class="p-3">Notatki</th>
+                                    <th class="p-3 text-right">Akcje</th>
+                                </tr>
+                            </thead>
+                            <tbody id="table-phones-body" class="divide-y divide-slate-100 dark:divide-slate-800">
+                                <tr><td colspan="5" class="text-center p-6 text-slate-400">Ładowanie numerów...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
             <!-- ZAKŁADKA 2: PRZENOSZENIE NUMERU (MNP) -->
-            <div id="tab-mnp" class="tab-content hidden space-y-4">
+            <div id="tab-mnp" class="tab-content staff-content hidden space-y-4">
                 <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden p-4 sm:p-6 transition-colors duration-200">
                     <div class="flex justify-between items-center mb-4">
                         <div>
@@ -397,7 +521,7 @@
             </div>
 
             <!-- ZAKŁADKA 3: CESJA NUMERU & ABONAMENT -->
-            <div id="tab-cesja" class="tab-content hidden space-y-4">
+            <div id="tab-cesja" class="tab-content staff-content hidden space-y-4">
                 <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden p-4 sm:p-6 transition-colors duration-200">
                     <div class="flex justify-between items-center mb-4">
                         <div>
@@ -433,13 +557,13 @@
                 </div>
             </div>
 
-            <!-- ZAKŁADKA 4: DODAWANIE KLIENTA / KLIENCI -->
-            <div id="tab-customers" class="tab-content hidden space-y-4">
+            <!-- ZAKŁADKA 4: KLIENCI -->
+            <div id="tab-customers" class="tab-content staff-content hidden space-y-4">
                 <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-4 sm:p-6 transition-colors duration-200">
                     <div class="flex justify-between items-center mb-4">
                         <div>
                             <h3 class="font-bold text-slate-900 dark:text-white text-lg">Baza Klientów / Abonentów</h3>
-                            <p class="text-xs text-slate-500 dark:text-slate-400">Dodawaj dane osobowe abonentów kart SIM</p>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">Zarządzaj danymi abonentów kart SIM oraz dostępem do portalu</p>
                         </div>
                         <button id="btn-add-customer-modal" class="px-3 py-2 bg-brand-500 hover:bg-brand-600 text-white text-xs font-semibold rounded-xl transition">
                             <i class="fa-solid fa-user-plus mr-1"></i> Dodaj Klienta
@@ -454,7 +578,7 @@
                                     <th class="p-3">Dowód / Paszport</th>
                                     <th class="p-3">Kontakt</th>
                                     <th class="p-3">Adres</th>
-                                    <th class="p-3 text-right">Akcje</th>
+                                    <th class="p-3 text-right">Akcje i Hasło</th>
                                 </tr>
                             </thead>
                             <tbody id="table-customers-body" class="divide-y divide-slate-100 dark:divide-slate-800">
@@ -465,8 +589,8 @@
                 </div>
             </div>
 
-            <!-- ZAKŁADKA 5: PRACOWNICY / ADMINI -->
-            <div id="tab-users" class="tab-content hidden space-y-4">
+            <!-- ZAKŁADKA 5: PRACOWNICY -->
+            <div id="tab-users" class="tab-content staff-content hidden space-y-4">
                 <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-4 sm:p-6 transition-colors duration-200">
                     <div class="flex justify-between items-center mb-4">
                         <div>
@@ -496,8 +620,145 @@
                 </div>
             </div>
 
+            <!-- ZAKŁADKA ABONENTA: MOJE WNIOSKI -->
+            <div id="tab-sub-requests" class="tab-content sub-content space-y-4">
+                <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-4 sm:p-6 transition-colors duration-200">
+                    <div class="flex justify-between items-center mb-4">
+                        <div>
+                            <h3 class="font-bold text-slate-900 dark:text-white text-lg">Moje Wnioski i Operacje</h3>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">Statusy Twoich zgłoszeń w systemie</p>
+                        </div>
+                        <button onclick="switchSubTab('tab-sub-new-request')" class="px-3 py-2 bg-brand-500 hover:bg-brand-600 text-white text-xs font-semibold rounded-xl transition">
+                            <i class="fa-solid fa-plus mr-1"></i> Złóż Nowy Wniosek
+                        </button>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-sm">
+                            <thead class="bg-slate-100 dark:bg-slate-800/80 text-slate-600 dark:text-slate-300 uppercase text-[11px] font-semibold">
+                                <tr>
+                                    <th class="p-3">Data</th>
+                                    <th class="p-3">Typ Wniosku</th>
+                                    <th class="p-3">Operator</th>
+                                    <th class="p-3">MSISDN</th>
+                                    <th class="p-3">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="table-sub-requests-body" class="divide-y divide-slate-100 dark:divide-slate-800">
+                                <tr><td colspan="5" class="text-center p-6 text-slate-400">Brak wniosków</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ZAKŁADKA ABONENTA: ZŁÓŻ NOWY WNIOSEK -->
+            <div id="tab-sub-new-request" class="tab-content sub-content hidden space-y-4">
+                <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-6 sm:p-8 max-w-2xl mx-auto transition-colors duration-200">
+                    <div class="mb-5 pb-3 border-b border-slate-100 dark:border-slate-800">
+                        <h3 class="font-bold text-slate-900 dark:text-white text-lg">Formularz Nowego Wniosku Abonenta</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">Wybierz rodzaj operacji i uzupełnij dane</p>
+                    </div>
+
+                    <form id="form-sub-request" class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase mb-1">Typ Wniosku *</label>
+                            <select id="sub-req-type" required class="w-full px-3 py-2.5 text-sm bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl outline-none text-slate-900 dark:text-slate-100">
+                                <option value="Rejestracja Nowego Numeru">Rejestracja Nowego Numeru na Kartę</option>
+                                <option value="MNP (Przeniesienie Numeru)">Przeniesienie Numeru (MNP od innego operatora)</option>
+                                <option value="Cesja Numeru">Cesja (Zmiana / Przeniesienie własności numeru)</option>
+                            </select>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase mb-1">Główny Operator *</label>
+                                <select id="sub-req-main-op" required class="w-full px-3 py-2.5 text-sm bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl outline-none text-slate-900 dark:text-slate-100">
+                                    <option value="PLAY">PLAY</option>
+                                    <option value="Plus">Plus</option>
+                                    <option value="Orange">Orange</option>
+                                    <option value="T-Mobile">T-Mobile</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase mb-1">Marka / Sub-operator *</label>
+                                <select id="sub-req-sub-op" required class="w-full px-3 py-2.5 text-sm bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl outline-none text-slate-900 dark:text-slate-100">
+                                    <!-- Dynamic -->
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase mb-1">Numer Telefonu (MSISDN) *</label>
+                                <input type="text" id="sub-req-msisdn" required placeholder="np. 500600700" class="w-full px-3 py-2.5 text-sm bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl outline-none text-slate-900 dark:text-slate-100">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase mb-1">Numer Karty SIM (ICCID)</label>
+                                <input type="text" id="sub-req-iccid" placeholder="np. 8948..." class="w-full px-3 py-2.5 text-sm bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl outline-none text-slate-900 dark:text-slate-100">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase mb-1">Dodatkowe uwagi / opis</label>
+                            <textarea id="sub-req-notes" rows="3" placeholder="Wpisz szczegóły wniosku..." class="w-full px-3 py-2.5 text-sm bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl outline-none text-slate-900 dark:text-slate-100"></textarea>
+                        </div>
+
+                        <div class="pt-2 flex justify-end">
+                            <button type="submit" class="px-6 py-3 bg-brand-500 hover:bg-brand-600 text-white font-semibold text-sm rounded-xl shadow-lg transition">
+                                <i class="fa-solid fa-paper-plane mr-2"></i> Wyślij Wniosek do Operatora
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
         </div>
     </main>
+
+    <!-- MODAL: NOWY / EDYCJA NUMER TELEFONU -->
+    <div id="modal-phone" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl max-w-lg w-full p-6 border border-slate-200 dark:border-slate-800 my-8">
+            <div class="flex justify-between items-center pb-3 border-b border-slate-200 dark:border-slate-800 mb-4">
+                <h3 id="modal-phone-title" class="text-lg font-bold text-slate-900 dark:text-white">Zarządzaj Numerem Telefonu</h3>
+                <button onclick="closePhoneModal()" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
+                    <i class="fa-solid fa-xmark text-xl"></i>
+                </button>
+            </div>
+
+            <form id="form-phone" class="space-y-4">
+                <input type="hidden" id="phone-id">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase mb-1">Numer Telefonu (MSISDN) *</label>
+                    <input type="text" id="phone-msisdn" required placeholder="np. 500600700" class="w-full px-3 py-2 text-sm bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl outline-none text-slate-900 dark:text-slate-100">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase mb-1">Operator *</label>
+                    <select id="phone-operator" class="w-full px-3 py-2 text-sm bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl outline-none text-slate-900 dark:text-slate-100">
+                        <option value="PLAY">PLAY</option>
+                        <option value="Plus">Plus</option>
+                        <option value="Orange">Orange</option>
+                        <option value="T-Mobile">T-Mobile</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase mb-1">Status *</label>
+                    <select id="phone-status" class="w-full px-3 py-2 text-sm bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl outline-none text-slate-900 dark:text-slate-100">
+                        <option value="Wolny">Wolny</option>
+                        <option value="Przypisany">Przypisany</option>
+                        <option value="Zablokowany">Zablokowany</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase mb-1">Notatki</label>
+                    <input type="text" id="phone-notes" placeholder="Dodatkowe informacje..." class="w-full px-3 py-2 text-sm bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl outline-none text-slate-900 dark:text-slate-100">
+                </div>
+                <div class="pt-4 flex justify-end space-x-3 border-t border-slate-100 dark:border-slate-800">
+                    <button type="button" onclick="closePhoneModal()" class="px-4 py-2 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-sm font-medium rounded-xl">Anuluj</button>
+                    <button type="submit" class="px-5 py-2 bg-brand-500 hover:bg-brand-600 text-white text-sm font-medium rounded-xl shadow">Zapisz Numer</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <!-- MODAL: NOWA / EDYCJA OPERACJA SIM -->
     <div id="modal-op" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto">
@@ -511,12 +772,16 @@
 
             <form id="form-op" class="space-y-4">
                 <input type="hidden" id="op-id">
+                <input type="hidden" id="op-customer-id" required>
 
                 <div>
                     <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase mb-1">Abonent / Klient *</label>
-                    <select id="op-customer-id" required class="w-full px-3 py-2 text-sm bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-brand-500 outline-none text-slate-900 dark:text-slate-100">
-                        <option value="">-- Wybierz klienta z bazy --</option>
-                    </select>
+                    <div class="flex items-center space-x-2">
+                        <input type="text" id="op-customer-display" readonly required placeholder="Kliknij przycisk, aby wybrać klienta z bazy..." onclick="openCustomerPickerModal()" class="w-full px-3 py-2 text-sm bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl outline-none text-slate-900 dark:text-slate-100 cursor-pointer">
+                        <button type="button" onclick="openCustomerPickerModal()" class="px-4 py-2 bg-brand-500 hover:bg-brand-600 text-white text-xs font-semibold rounded-xl transition whitespace-nowrap shadow">
+                            <i class="fa-solid fa-address-book mr-1"></i> Wybierz klienta
+                        </button>
+                    </div>
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -583,17 +848,54 @@
         </div>
     </div>
 
-    <!-- MODAL: DODAJ KLIENTA -->
+    <!-- MODAL: WYBÓR KLIENTA Z BAZY (PŁYWAJĄCE OKIENKO) -->
+    <div id="modal-customer-picker" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl max-w-3xl w-full p-6 border border-slate-200 dark:border-slate-800 my-8">
+            <div class="flex justify-between items-center pb-3 border-b border-slate-200 dark:border-slate-800 mb-4">
+                <div>
+                    <h3 class="text-lg font-bold text-slate-900 dark:text-white">Wybierz klienta z bazy</h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">Kliknij przycisk "Wybierz" przy odpowiednim abonnencie</p>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <button onclick="openCustomerModalFromPicker()" class="px-3 py-1.5 bg-brand-500 hover:bg-brand-600 text-white text-xs font-semibold rounded-lg transition">
+                        <i class="fa-solid fa-user-plus mr-1"></i> Dodaj nowego klienta
+                    </button>
+                    <button onclick="closeCustomerPickerModal()" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-2">
+                        <i class="fa-solid fa-xmark text-xl"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="overflow-x-auto max-h-96">
+                <table class="w-full text-left text-sm">
+                    <thead class="bg-slate-100 dark:bg-slate-800/80 text-slate-600 dark:text-slate-300 uppercase text-[11px] font-semibold sticky top-0">
+                        <tr>
+                            <th class="p-3">Imię i Nazwisko / Firma</th>
+                            <th class="p-3">PESEL / NIP</th>
+                            <th class="p-3">Kontakt</th>
+                            <th class="p-3 text-right">Wybierz</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-picker-body" class="divide-y divide-slate-100 dark:divide-slate-800">
+                        <tr><td colspan="4" class="text-center p-6 text-slate-400">Ładowanie klientów...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: NOWY / EDYCJA KLIENTA -->
     <div id="modal-customer" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto">
         <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl max-w-xl w-full p-6 border border-slate-200 dark:border-slate-800 my-8">
             <div class="flex justify-between items-center pb-3 border-b border-slate-200 dark:border-slate-800 mb-4">
-                <h3 class="text-lg font-bold text-slate-900 dark:text-white">Nowy Klient / Abonent Karty SIM</h3>
+                <h3 id="modal-customer-title" class="text-lg font-bold text-slate-900 dark:text-white">Nowy Klient / Abonent Karty SIM</h3>
                 <button id="btn-close-cust-modal" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
                     <i class="fa-solid fa-xmark text-xl"></i>
                 </button>
             </div>
 
             <form id="form-customer" class="space-y-4">
+                <input type="hidden" id="edit-customer-id">
                 <div class="flex items-center space-x-4 mb-2">
                     <label class="inline-flex items-center">
                         <input type="radio" name="cust-type" value="person" checked class="text-brand-500 focus:ring-brand-500">
@@ -658,7 +960,7 @@
 
                 <div class="pt-4 flex justify-end space-x-3 border-t border-slate-100 dark:border-slate-800">
                     <button type="button" id="btn-cancel-cust" class="px-4 py-2 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-sm font-medium rounded-xl">Anuluj</button>
-                    <button type="submit" class="px-5 py-2 bg-slate-800 dark:bg-slate-700 hover:bg-slate-900 text-white text-sm font-medium rounded-xl shadow">Zapisz Klienta i Utwórz Konto</button>
+                    <button type="submit" class="px-5 py-2 bg-slate-800 dark:bg-slate-700 hover:bg-slate-900 text-white text-sm font-medium rounded-xl shadow">Zapisz Klienta</button>
                 </div>
             </form>
         </div>
@@ -726,6 +1028,7 @@
         let operationsData = [];
         let customersData = [];
         let usersData = [];
+        let phoneNumbersData = [];
 
         const dbStatusBadge = document.getElementById('db-status-badge');
         const dbStatusDot = document.getElementById('db-status-dot');
@@ -847,6 +1150,8 @@
                     operationsData.push({ id: docSnap.id, ...docSnap.data() });
                 });
                 renderOperationsTables();
+                renderSubscriberRequests();
+                renderSystemRequestsTable();
             });
 
             onSnapshot(getPublicCollPath('customers'), (snapshot) => {
@@ -855,7 +1160,15 @@
                     customersData.push({ id: docSnap.id, ...docSnap.data() });
                 });
                 renderCustomersTable();
-                updateCustomerSelectOptions();
+                renderCustomerPickerTable();
+            });
+
+            onSnapshot(getPublicCollPath('phone_numbers'), (snapshot) => {
+                phoneNumbersData = [];
+                snapshot.forEach(docSnap => {
+                    phoneNumbersData.push({ id: docSnap.id, ...docSnap.data() });
+                });
+                renderPhonesTable();
             });
 
             onSnapshot(getPublicCollPath('users'), (snapshot) => {
@@ -878,7 +1191,6 @@
             document.getElementById('info-modal-email').textContent = currentUser.email || '-';
             document.getElementById('info-modal-phone').textContent = currentUser.phone || currentUser.login || '-';
 
-            // Reset password forms
             document.getElementById('form-user-change-pass').reset();
             document.getElementById('form-user-restart-pass').reset();
             switchPasswordTab('change');
@@ -909,7 +1221,6 @@
             }
         };
 
-        // Walidacja CERT Polska dla pól zmiany hasła
         function validatePasswordInput(p1, p2, submitBtnId) {
             const hasLen = p1.length >= 12;
             const hasUpper = /[A-Z]/.test(p1);
@@ -942,7 +1253,6 @@
             validatePasswordInput(document.getElementById('res-pass-1').value, document.getElementById('res-pass-2').value, 'btn-submit-restart');
         });
 
-        // 1. Zmiana hasła (z podaniem obecnego hasła, bez wylogowania)
         document.getElementById('form-user-change-pass').addEventListener('submit', async (e) => {
             e.preventDefault();
             if (!currentUser) return;
@@ -959,13 +1269,12 @@
                 await updateDoc(getPublicDocPath('users', currentUser.id), { password: newPass });
                 currentUser.password = newPass;
                 closeUserInfoModal();
-                showToast("Hasło zostało pomyślnie zmienione, przy kolejnym logowaniu posługuj się nowym hasłem", "success");
+                showToast("Hasło zostało pomyślnie zmienione", "success");
             } catch (err) {
                 showToast("Błąd zmiany hasła: " + err.message, "error");
             }
         });
 
-        // 2. Restart hasła (z wylogowaniem po 5s)
         document.getElementById('form-user-restart-pass').addEventListener('submit', async (e) => {
             e.preventDefault();
             if (!currentUser) return;
@@ -976,7 +1285,6 @@
                 currentUser.password = newPass;
                 closeUserInfoModal();
 
-                // Wyświetl pływające okienko odliczania przez 5 sekund
                 const countdownModal = document.getElementById('modal-logout-countdown');
                 const countdownBar = document.getElementById('countdown-bar');
                 const countdownText = document.getElementById('countdown-text');
@@ -1068,11 +1376,23 @@
             const roleLabels = { 'admin': 'Administrator', 'advisor': 'Doradca SIM', 'subscriber': 'Abonent' };
             userDisplayRole.textContent = roleLabels[currentUser.role] || currentUser.role;
 
+            const navStaff = document.getElementById('nav-tabs-staff');
+            const navSub = document.getElementById('nav-tabs-subscriber');
             const tabBtnUsers = document.getElementById('tab-btn-users');
-            if (currentUser.role === 'admin') {
-                tabBtnUsers.classList.remove('hidden');
+
+            if (currentUser.role === 'subscriber') {
+                navStaff.classList.add('hidden');
+                navSub.classList.remove('hidden');
+                document.querySelectorAll('.staff-content').forEach(el => el.classList.add('hidden'));
+                document.getElementById('tab-sub-requests').classList.remove('hidden');
             } else {
-                tabBtnUsers.classList.add('hidden');
+                navSub.classList.add('hidden');
+                navStaff.classList.remove('hidden');
+                if (currentUser.role === 'admin') {
+                    tabBtnUsers.classList.remove('hidden');
+                } else {
+                    tabBtnUsers.classList.add('hidden');
+                }
             }
 
             setupDataListeners();
@@ -1129,7 +1449,56 @@
             }
         });
 
-        // ================= CERT POLSKA PASSWORD MODAL (PIERWSZE LOGOWANIE) =================
+        // ================= ADD / EDIT USERS (STAFF) =================
+        const modalAddUser = document.getElementById('modal-add-user');
+        document.getElementById('btn-add-user-modal').addEventListener('click', () => {
+            document.getElementById('form-add-user').reset();
+            document.getElementById('edit-user-id').value = '';
+            document.getElementById('modal-user-title').textContent = 'Rejestracja Konta Pracownika';
+            modalAddUser.classList.remove('hidden');
+        });
+        document.getElementById('btn-close-user-modal').addEventListener('click', () => modalAddUser.classList.add('hidden'));
+        document.getElementById('btn-cancel-user-modal').addEventListener('click', () => modalAddUser.classList.add('hidden'));
+
+        window.editUser = function(id) {
+            const u = usersData.find(item => item.id === id);
+            if (!u) return;
+            document.getElementById('edit-user-id').value = u.id;
+            document.getElementById('new-user-login').value = u.login || '';
+            document.getElementById('new-user-name').value = u.name || '';
+            document.getElementById('new-user-email').value = u.email || '';
+            document.getElementById('new-user-role').value = u.role || 'advisor';
+            document.getElementById('new-user-pass').value = u.password || '';
+            document.getElementById('modal-user-title').textContent = 'Edycja Konta Pracownika';
+            modalAddUser.classList.remove('hidden');
+        };
+
+        document.getElementById('form-add-user').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const editId = document.getElementById('edit-user-id').value;
+            const login = document.getElementById('new-user-login').value.trim();
+            const name = document.getElementById('new-user-name').value.trim();
+            const email = document.getElementById('new-user-email').value.trim();
+            const role = document.getElementById('new-user-role').value;
+            const password = document.getElementById('new-user-pass').value;
+
+            try {
+                if (editId) {
+                    await updateDoc(getPublicDocPath('users', editId), { login, name, email, role, password });
+                    showToast("Dane pracownika zaktualizowano", "success");
+                } else {
+                    await addDoc(getPublicCollPath('users'), {
+                        login, name, email, role, password, mustChangePassword: true, theme: 'dark', createdAt: new Date().toISOString()
+                    });
+                    showToast("Pracownik/Doradca został zarejestrowany pomyślnie!", "success");
+                }
+                modalAddUser.classList.add('hidden');
+            } catch (err) {
+                showToast("Błąd zapisu pracownika: " + err.message, "error");
+            }
+        });
+
+        // ================= CERT POLSKA PASSWORD MODAL =================
         const modalCertPass = document.getElementById('modal-cert-password');
         const certPass1 = document.getElementById('cert-pass-1');
         const certPass2 = document.getElementById('cert-pass-2');
@@ -1194,7 +1563,7 @@
                 currentUser.password = certPass1.value;
 
                 modalCertPass.classList.add('hidden');
-                showToast("Hasło zostało pomyślnie zmienione zgodnie z wymogami CERT Polska", "success");
+                showToast("Hasło zostało pomyślnie zmienione", "success");
                 loginSuccess();
             } catch (err) {
                 showToast("Błąd zmiany hasła: " + err.message, "error");
@@ -1206,14 +1575,224 @@
             btn.addEventListener('click', () => {
                 const target = btn.getAttribute('data-tab');
                 document.querySelectorAll('.tab-btn').forEach(b => {
-                    b.classList.remove('active-tab', 'bg-slate-200', 'dark:bg-slate-800', 'text-slate-900', 'dark:text-white');
+                    b.classList.remove('bg-slate-200', 'dark:bg-slate-800', 'text-slate-900', 'dark:text-white');
+                    b.classList.add('text-slate-600', 'dark:text-slate-300');
                 });
-                btn.classList.add('active-tab', 'bg-slate-200', 'dark:bg-slate-800', 'text-slate-900', 'dark:text-white');
+                btn.classList.add('bg-slate-200', 'dark:bg-slate-800', 'text-slate-900', 'dark:text-white');
+                btn.classList.remove('text-slate-600', 'dark:text-slate-300');
 
-                document.querySelectorAll('.tab-content').forEach(tc => tc.classList.add('hidden'));
+                document.querySelectorAll('.staff-content').forEach(tc => tc.classList.add('hidden'));
                 document.getElementById(target).classList.remove('hidden');
             });
         });
+
+        // Subscriber sub-tabs switching
+        window.switchSubTab = function(targetId) {
+            document.querySelectorAll('.tab-btn-sub').forEach(b => {
+                b.classList.remove('bg-slate-200', 'dark:bg-slate-800', 'text-slate-900', 'dark:text-white');
+                b.classList.add('text-slate-600', 'dark:text-slate-300');
+            });
+            event.currentTarget.classList.add('bg-slate-200', 'dark:bg-slate-800', 'text-slate-900', 'dark:text-white');
+
+            document.querySelectorAll('.sub-content').forEach(sc => sc.classList.add('hidden'));
+            document.getElementById(targetId).classList.remove('hidden');
+        };
+
+        // ================= SYSTEM REQUESTS MANAGEMENT (STAFF - REAL CHECK) =================
+        window.acceptSystemRequest = async function(id) {
+            try {
+                await updateDoc(getPublicDocPath('sim_operations', id), { status: 'Zarejestrowana' });
+                showToast("Wniosek został zaakceptowany i zarejestrowany", "success");
+            } catch (err) {
+                showToast("Błąd akceptacji wniosku: " + err.message, "error");
+            }
+        };
+
+        window.rejectSystemRequest = async function(id) {
+            try {
+                await updateDoc(getPublicDocPath('sim_operations', id), { status: 'Odrzucona' });
+                showToast("Wniosek został odrzucony", "success");
+            } catch (err) {
+                showToast("Błąd odrzucenia wniosku: " + err.message, "error");
+            }
+        };
+
+        function renderSystemRequestsTable() {
+            const tbody = document.getElementById('table-system-requests-body');
+            if (!tbody) return;
+
+            const pendingRequests = operationsData.filter(item => item.status === 'Oczekuje na aktywację');
+
+            if (pendingRequests.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="7" class="text-center p-8 text-slate-400"><i class="fa-solid fa-circle-check text-green-500 mr-2 text-base"></i>Brak nowych wniosków systemowych oczekujących na akceptację lub odrzucenie</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = pendingRequests.map(item => {
+                const dateStr = item.createdAt ? new Date(item.createdAt).toLocaleDateString('pl-PL') : '-';
+                return `
+                    <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition">
+                        <td class="p-3 text-xs font-mono text-slate-500">${dateStr}</td>
+                        <td class="p-3 font-semibold text-slate-900 dark:text-white">${item.customerName || '-'}</td>
+                        <td class="p-3 text-xs font-medium text-slate-700 dark:text-slate-300">${item.type}</td>
+                        <td class="p-3"><span class="px-2 py-0.5 rounded text-xs font-semibold bg-brand-50 dark:bg-brand-950/50 text-brand-700 dark:text-brand-300 border border-brand-200">${item.subOperator || item.mainOperator}</span></td>
+                        <td class="p-3 font-mono text-xs font-bold">${item.msisdn}</td>
+                        <td class="p-3 text-xs">
+                            <span class="px-2 py-1 rounded-full font-medium bg-amber-100 text-amber-700 dark:bg-amber-950/50 dark:text-amber-300">
+                                ${item.status}
+                            </span>
+                        </td>
+                        <td class="p-3 text-right space-x-1 whitespace-nowrap">
+                            <button onclick="acceptSystemRequest('${item.id}')" class="px-2.5 py-1 bg-green-600 hover:bg-green-700 text-white text-xs font-semibold rounded-lg shadow transition" title="Zaakceptuj wniosek"><i class="fa-solid fa-check mr-1"></i> Akceptuj</button>
+                            <button onclick="rejectSystemRequest('${item.id}')" class="px-2.5 py-1 bg-red-600 hover:bg-red-700 text-white text-xs font-semibold rounded-lg transition" title="Odrzuć wniosek"><i class="fa-solid fa-xmark mr-1"></i> Odrzuć</button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        // ================= SUBSCRIBER REQUESTS =================
+        const subMainOp = document.getElementById('sub-req-main-op');
+        const subSubOp = document.getElementById('sub-req-sub-op');
+
+        function updateSubSubOperators() {
+            const main = subMainOp.value;
+            const subs = subOperatorsMap[main] || [main];
+            subSubOp.innerHTML = subs.map(s => `<option value="${s}">${s}</option>`).join('');
+        }
+        subMainOp.addEventListener('change', updateSubSubOperators);
+        updateSubSubOperators();
+
+        document.getElementById('form-sub-request').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            if (!currentUser) return;
+
+            const type = document.getElementById('sub-req-type').value;
+            const mainOperator = document.getElementById('sub-req-main-op').value;
+            const subOperator = document.getElementById('sub-req-sub-op').value;
+            const msisdn = document.getElementById('sub-req-msisdn').value.trim();
+            const iccid = document.getElementById('sub-req-iccid').value.trim();
+            const notes = document.getElementById('sub-req-notes').value.trim();
+
+            const customerObj = customersData.find(c => c.phone === currentUser.phone || c.email === currentUser.email);
+            const customerId = customerObj ? customerObj.id : 'sub-' + currentUser.id;
+            const customerName = currentUser.name || 'Abonent';
+
+            const payload = {
+                customerId, customerName, mainOperator, subOperator, type, msisdn, iccid, notes,
+                status: 'Oczekuje na aktywację',
+                createdByName: customerName,
+                createdAt: new Date().toISOString()
+            };
+
+            try {
+                await addDoc(getPublicCollPath('sim_operations'), payload);
+                showToast("Twój wniosek został pomyślnie wysłany!", "success");
+                document.getElementById('form-sub-request').reset();
+                updateSubSubOperators();
+                
+                document.querySelectorAll('.sub-content').forEach(sc => sc.classList.add('hidden'));
+                document.getElementById('tab-sub-requests').classList.remove('hidden');
+            } catch (err) {
+                showToast("Błąd wysyłania wniosku: " + err.message, "error");
+            }
+        });
+
+        function renderSubscriberRequests() {
+            const tbody = document.getElementById('table-sub-requests-body');
+            if (!tbody || !currentUser || currentUser.role !== 'subscriber') return;
+
+            const myRequests = operationsData.filter(o => o.customerName === currentUser.name || o.createdByName === currentUser.name);
+
+            if (myRequests.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" class="text-center p-6 text-slate-400">Brak złożonych wniosków. Skorzystaj z zakładki "Złóż Wniosek".</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = myRequests.map(item => {
+                const dateStr = item.createdAt ? new Date(item.createdAt).toLocaleDateString('pl-PL') : '-';
+                return `
+                    <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition">
+                        <td class="p-3 text-xs font-mono text-slate-500">${dateStr}</td>
+                        <td class="p-3 font-semibold text-slate-900 dark:text-white">${item.type}</td>
+                        <td class="p-3"><span class="px-2 py-0.5 rounded text-xs font-semibold bg-brand-50 dark:bg-brand-950/50 text-brand-700 dark:text-brand-300 border border-brand-200">${item.subOperator || item.mainOperator}</span></td>
+                        <td class="p-3 font-mono text-xs font-bold">${item.msisdn}</td>
+                        <td class="p-3 text-xs"><span class="px-2 py-1 rounded-full font-medium ${item.status === 'Zarejestrowana' ? 'bg-green-100 text-green-700 dark:bg-green-950/50 dark:text-green-300' : (item.status === 'Odrzucona' ? 'bg-red-100 text-red-700 dark:bg-red-950/50 dark:text-red-300' : 'bg-amber-100 text-amber-700 dark:bg-amber-950/50 dark:text-amber-300')}">${item.status}</span></td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        // ================= PHONE NUMBERS MANAGEMENT =================
+        const modalPhone = document.getElementById('modal-phone');
+
+        window.openPhoneModal = (id = null) => {
+            document.getElementById('form-phone').reset();
+            document.getElementById('phone-id').value = '';
+            if (id) {
+                const phone = phoneNumbersData.find(p => p.id === id);
+                if (phone) {
+                    document.getElementById('phone-id').value = phone.id;
+                    document.getElementById('phone-msisdn').value = phone.msisdn || '';
+                    document.getElementById('phone-operator').value = phone.operator || 'PLAY';
+                    document.getElementById('phone-status').value = phone.status || 'Wolny';
+                    document.getElementById('phone-notes').value = phone.notes || '';
+                    document.getElementById('modal-phone-title').textContent = 'Edytuj Numer Telefonu';
+                }
+            } else {
+                document.getElementById('modal-phone-title').textContent = 'Dodaj Nowy Numer Telefonu';
+            }
+            modalPhone.classList.remove('hidden');
+        };
+
+        window.closePhoneModal = () => { modalPhone.classList.add('hidden'); };
+
+        document.getElementById('form-phone').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const phoneId = document.getElementById('phone-id').value;
+            const msisdn = document.getElementById('phone-msisdn').value.trim();
+            const operator = document.getElementById('phone-operator').value;
+            const status = document.getElementById('phone-status').value;
+            const notes = document.getElementById('phone-notes').value.trim();
+
+            const payload = { msisdn, operator, status, notes, updatedAt: new Date().toISOString() };
+
+            try {
+                if (phoneId) {
+                    await updateDoc(getPublicDocPath('phone_numbers', phoneId), payload);
+                    showToast("Numer telefonu zaktualizowany", "success");
+                } else {
+                    payload.createdAt = new Date().toISOString();
+                    await addDoc(getPublicCollPath('phone_numbers'), payload);
+                    showToast("Numer telefonu dodany do bazy", "success");
+                }
+                closePhoneModal();
+            } catch (err) {
+                showToast("Błąd zapisu numeru: " + err.message, "error");
+            }
+        });
+
+        function renderPhonesTable() {
+            const tbody = document.getElementById('table-phones-body');
+            if (!tbody) return;
+            if (phoneNumbersData.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" class="text-center p-6 text-slate-400">Brak numerów telefonów w bazie</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = phoneNumbersData.map(p => `
+                <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition">
+                    <td class="p-3 font-mono font-bold text-slate-900 dark:text-white">${p.msisdn}</td>
+                    <td class="p-3"><span class="px-2 py-0.5 rounded text-xs font-semibold bg-brand-50 dark:bg-brand-950/50 text-brand-700 dark:text-brand-300 border border-brand-200">${p.operator}</span></td>
+                    <td class="p-3 text-xs"><span class="px-2 py-1 rounded-full font-medium ${p.status === 'Wolny' ? 'bg-green-100 text-green-700 dark:bg-green-950/50 dark:text-green-300' : (p.status === 'Przypisany' ? 'bg-blue-100 text-blue-700 dark:bg-blue-950/50 dark:text-blue-300' : 'bg-red-100 text-red-700 dark:bg-red-950/50 dark:text-red-300')}">${p.status}</span></td>
+                    <td class="p-3 text-xs text-slate-600 dark:text-slate-300">${p.notes || '-'}</td>
+                    <td class="p-3 text-right space-x-1">
+                        <button onclick="openPhoneModal('${p.id}')" class="text-slate-400 hover:text-brand-600 p-1" title="Edytuj"><i class="fa-solid fa-pen"></i></button>
+                        <button onclick="confirmDelete('phone_numbers', '${p.id}')" class="text-slate-400 hover:text-red-600 p-1" title="Usuń"><i class="fa-solid fa-trash"></i></button>
+                    </td>
+                </tr>
+            `).join('');
+        }
 
         // ================= OPERATIONS / SIM REGISTRATION =================
         const modalOp = document.getElementById('modal-op');
@@ -1231,6 +1810,8 @@
         window.openOperationModal = (defaultType = 'Rejestracja Nowego Numeru') => {
             document.getElementById('form-op').reset();
             document.getElementById('op-id').value = '';
+            document.getElementById('op-customer-id').value = '';
+            document.getElementById('op-customer-display').value = '';
             document.getElementById('op-type').value = defaultType;
             updateSubOperators();
             document.getElementById('modal-op-title').textContent = `Obsługa: ${defaultType}`;
@@ -1252,6 +1833,11 @@
             const iccid = document.getElementById('op-iccid').value.trim();
             const status = document.getElementById('op-status').value;
             const notes = document.getElementById('op-notes').value.trim();
+
+            if (!customerId) {
+                showToast("Wybierz klienta z bazy danych!", "error");
+                return;
+            }
 
             const customerObj = customersData.find(c => c.id === customerId);
             const customerName = customerObj ? `${customerObj.firstName} ${customerObj.lastName} ${customerObj.companyName ? '('+customerObj.companyName+')' : ''}` : 'Nieznany';
@@ -1302,20 +1888,12 @@
                     <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition">
                         <td class="p-3 text-xs font-mono text-slate-500">${dateStr}</td>
                         <td class="p-3 font-semibold text-slate-900 dark:text-white">${item.customerName}</td>
-                        <td class="p-3">
-                            <span class="px-2 py-0.5 rounded text-xs font-semibold bg-brand-50 dark:bg-brand-950/50 text-brand-700 dark:text-brand-300 border border-brand-200 dark:border-brand-900">
-                                ${item.subOperator || item.mainOperator}
-                            </span>
-                        </td>
+                        <td class="p-3"><span class="px-2 py-0.5 rounded text-xs font-semibold bg-brand-50 dark:bg-brand-950/50 text-brand-700 dark:text-brand-300 border border-brand-200">${item.subOperator || item.mainOperator}</span></td>
                         <td class="p-3 font-mono text-xs">
                             <div class="font-bold">${item.msisdn}</div>
                             <div class="text-slate-400 text-[10px]">${item.iccid || item.type}</div>
                         </td>
-                        <td class="p-3 text-xs">
-                            <span class="px-2 py-1 rounded-full font-medium bg-green-100 text-green-700 dark:bg-green-950/50 dark:text-green-300">
-                                ${item.status}
-                            </span>
-                        </td>
+                        <td class="p-3 text-xs"><span class="px-2 py-1 rounded-full font-medium bg-green-100 text-green-700 dark:bg-green-950/50 dark:text-green-300">${item.status}</span></td>
                         <td class="p-3 text-right space-x-1">
                             <button onclick="editOp('${item.id}')" class="text-slate-400 hover:text-brand-600 p-1" title="Edytuj"><i class="fa-solid fa-pen"></i></button>
                             <button onclick="confirmDelete('sim_operations', '${item.id}')" class="text-slate-400 hover:text-red-600 p-1" title="Usuń"><i class="fa-solid fa-trash"></i></button>
@@ -1331,6 +1909,7 @@
 
             document.getElementById('op-id').value = op.id;
             document.getElementById('op-customer-id').value = op.customerId || '';
+            document.getElementById('op-customer-display').value = op.customerName || '';
             document.getElementById('op-main-operator').value = op.mainOperator || 'PLAY';
             updateSubOperators();
             document.getElementById('op-sub-operator').value = op.subOperator || op.mainOperator;
@@ -1344,11 +1923,68 @@
             modalOp.classList.remove('hidden');
         };
 
-        // ================= CUSTOMERS MANAGEMENT =================
+        // ================= CUSTOMER PICKER MODAL =================
+        const modalCustomerPicker = document.getElementById('modal-customer-picker');
+
+        window.openCustomerPickerModal = function() {
+            renderCustomerPickerTable();
+            modalCustomerPicker.classList.remove('hidden');
+        }
+
+        window.closeCustomerPickerModal = function() {
+            modalCustomerPicker.classList.add('hidden');
+        }
+
+        window.selectCustomerForOp = function(id, name) {
+            document.getElementById('op-customer-id').value = id;
+            document.getElementById('op-customer-display').value = name;
+            closeCustomerPickerModal();
+            showToast(`Wybrano klienta: ${name}`, "success");
+        }
+
+        function renderCustomerPickerTable() {
+            const tbody = document.getElementById('table-picker-body');
+            if (!tbody) return;
+            if (customersData.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="4" class="text-center p-6 text-slate-400">Brak klientów w bazie. Dodaj klienta.</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = customersData.map(c => {
+                const fullName = `${c.firstName} ${c.lastName} ${c.companyName ? '('+c.companyName+')' : ''}`;
+                return `
+                    <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition">
+                        <td class="p-3 font-semibold text-slate-900 dark:text-white">
+                            ${c.firstName} ${c.lastName}
+                            ${c.companyName ? `<div class="text-xs text-brand-600 dark:text-brand-400 font-normal"><i class="fa-solid fa-building mr-1"></i>${c.companyName}</div>` : ''}
+                        </td>
+                        <td class="p-3 font-mono text-xs text-slate-600 dark:text-slate-300">${c.pesel ? `PESEL: ${c.pesel}` : (c.nip ? `NIP: ${c.nip}` : '-')}</td>
+                        <td class="p-3 text-xs text-slate-600 dark:text-slate-300">${c.phone || '-'}</td>
+                        <td class="p-3 text-right">
+                            <button type="button" onclick="selectCustomerForOp('${c.id}', '${fullName.replace(/'/g, "\\'")}')" class="px-3 py-1 bg-brand-500 hover:bg-brand-600 text-white text-xs font-semibold rounded-lg shadow transition">
+                                <i class="fa-solid fa-check mr-1"></i> Wybierz
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        window.openCustomerModalFromPicker = function() {
+            closeCustomerPickerModal();
+            document.getElementById('form-customer').reset();
+            document.getElementById('edit-customer-id').value = '';
+            document.getElementById('modal-customer-title').textContent = 'Nowy Klient / Abonent Karty SIM';
+            modalCustomer.classList.remove('hidden');
+        }
+
+        // ================= CUSTOMERS MANAGEMENT (CRUD) =================
         const modalCustomer = document.getElementById('modal-customer');
 
         document.getElementById('btn-add-customer-modal').addEventListener('click', () => {
             document.getElementById('form-customer').reset();
+            document.getElementById('edit-customer-id').value = '';
+            document.getElementById('modal-customer-title').textContent = 'Nowy Klient / Abonent Karty SIM';
             modalCustomer.classList.remove('hidden');
         });
         document.getElementById('btn-close-cust-modal').addEventListener('click', () => modalCustomer.classList.add('hidden'));
@@ -1362,8 +1998,73 @@
             });
         });
 
+        window.editCustomer = function(id) {
+            const c = customersData.find(item => item.id === id);
+            if (!c) return;
+
+            document.getElementById('edit-customer-id').value = c.id;
+            document.getElementById('cust-fname').value = c.firstName || '';
+            document.getElementById('cust-lname').value = c.lastName || '';
+            document.getElementById('cust-pesel').value = c.pesel || '';
+            document.getElementById('cust-doc-num').value = c.docNumber || '';
+            document.getElementById('cust-email').value = c.email || '';
+            document.getElementById('cust-phone').value = c.phone || '';
+            document.getElementById('cust-address').value = c.address || '';
+
+            if (c.isCompany) {
+                document.querySelector('input[name="cust-type"][value="company"]').checked = true;
+                document.getElementById('cust-company-fields').classList.remove('hidden');
+                document.getElementById('cust-company-name').value = c.companyName || '';
+                document.getElementById('cust-nip').value = c.nip || '';
+            } else {
+                document.querySelector('input[name="cust-type"][value="person"]').checked = true;
+                document.getElementById('cust-company-fields').classList.add('hidden');
+            }
+
+            document.getElementById('modal-customer-title').textContent = 'Edycja Danych Klienta';
+            modalCustomer.classList.remove('hidden');
+        };
+
+        // Funkcja przypisania/generowania hasła tymczasowego dla klienta z poziomu tabeli klientów
+        window.assignTempPasswordForCustomer = async function(customerId) {
+            const customer = customersData.find(c => c.id === customerId);
+            if (!customer || !customer.phone) {
+                showToast("Klient musi posiadać wpisany numer telefonu, aby móc utworzyć konto i wygenerować hasło!", "error");
+                return;
+            }
+
+            const tempPassword = 'Temp' + Math.floor(100000 + Math.random() * 900000) + '!A';
+            const existingUser = usersData.find(u => u.login === customer.phone || u.phone === customer.phone);
+
+            try {
+                if (existingUser) {
+                    await updateDoc(getPublicDocPath('users', existingUser.id), {
+                        password: tempPassword,
+                        mustChangePassword: true
+                    });
+                    showToast(`Zresetowano hasło dla ${customer.firstName} ${customer.lastName}. Tymczasowe hasło: ${tempPassword}`, "success");
+                } else {
+                    await addDoc(getPublicCollPath('users'), {
+                        login: customer.phone,
+                        phone: customer.phone,
+                        password: tempPassword,
+                        name: `${customer.firstName} ${customer.lastName}`,
+                        email: customer.email || `${customer.phone}@abonent.pl`,
+                        role: 'subscriber',
+                        mustChangePassword: true,
+                        theme: 'dark',
+                        createdAt: new Date().toISOString()
+                    });
+                    showToast(`Utworzono konto i hasło tymczasowe dla ${customer.firstName} ${customer.lastName} (${customer.phone}): ${tempPassword}`, "success");
+                }
+            } catch (err) {
+                showToast("Błąd przypisywania hasła: " + err.message, "error");
+            }
+        };
+
         document.getElementById('form-customer').addEventListener('submit', async (e) => {
             e.preventDefault();
+            const editId = document.getElementById('edit-customer-id').value;
             const isCompany = document.querySelector('input[name="cust-type"]:checked').value === 'company';
             const firstName = document.getElementById('cust-fname').value.trim();
             const lastName = document.getElementById('cust-lname').value.trim();
@@ -1375,29 +2076,39 @@
             const phone = document.getElementById('cust-phone').value.trim();
             const address = document.getElementById('cust-address').value.trim();
 
-            const newCust = { firstName, lastName, isCompany, companyName, nip, pesel, docNumber, email, phone, address, createdAt: new Date().toISOString() };
+            const custPayload = { firstName, lastName, isCompany, companyName, nip, pesel, docNumber, email, phone, address, updatedAt: new Date().toISOString() };
 
             try {
-                await addDoc(getPublicCollPath('customers'), newCust);
-
-                if (phone) {
-                    const tempPassword = 'Temp' + Math.floor(100000 + Math.random() * 900000) + '!A';
-                    await addDoc(getPublicCollPath('users'), {
-                        login: phone,
-                        phone: phone,
-                        password: tempPassword,
-                        name: `${firstName} ${lastName}`,
-                        email: email || `${phone}@abonent.pl`,
-                        role: 'subscriber',
-                        mustChangePassword: true,
-                        theme: 'dark',
-                        createdAt: new Date().toISOString()
-                    });
-                    showToast(`Klient dodany! Tymczasowe hasło dla abonenta (${phone}): ${tempPassword}`, "success");
+                if (editId) {
+                    await updateDoc(getPublicDocPath('customers', editId), custPayload);
+                    showToast("Dane klienta zostały zaktualizowane", "success");
                 } else {
-                    showToast("Klient pomyślnie dodany do bazy", "success");
-                }
+                    custPayload.createdAt = new Date().toISOString();
+                    const docRef = await addDoc(getPublicCollPath('customers'), custPayload);
 
+                    if (phone) {
+                        const tempPassword = 'Temp' + Math.floor(100000 + Math.random() * 900000) + '!A';
+                        await addDoc(getPublicCollPath('users'), {
+                            login: phone,
+                            phone: phone,
+                            password: tempPassword,
+                            name: `${firstName} ${lastName}`,
+                            email: email || `${phone}@abonent.pl`,
+                            role: 'subscriber',
+                            mustChangePassword: true,
+                            theme: 'dark',
+                            createdAt: new Date().toISOString()
+                        });
+                        showToast(`Klient dodany! Wygenerowano hasło tymczasowe dla (${phone}): ${tempPassword}`, "success");
+                    } else {
+                        showToast("Klient pomyślnie dodany do bazy", "success");
+                    }
+
+                    if (!modalOp.classList.contains('hidden')) {
+                        const fullName = `${firstName} ${lastName} ${companyName ? '('+companyName+')' : ''}`;
+                        selectCustomerForOp(docRef.id, fullName);
+                    }
+                }
                 modalCustomer.classList.add('hidden');
             } catch (err) {
                 showToast("Błąd zapisu klienta: " + err.message, "error");
@@ -1406,8 +2117,9 @@
 
         function renderCustomersTable() {
             const tbody = document.getElementById('table-customers-body');
+            if (!tbody) return;
             if (customersData.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" class="text-center p-6 text-slate-400">Brak klientów w bazie</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="6" class="text-center p-6 text-slate-400">Brak klientów</td></tr>`;
                 return;
             }
 
@@ -1417,32 +2129,26 @@
                         ${c.firstName} ${c.lastName}
                         ${c.companyName ? `<div class="text-xs text-brand-600 dark:text-brand-400 font-normal"><i class="fa-solid fa-building mr-1"></i>${c.companyName}</div>` : ''}
                     </td>
-                    <td class="p-3 font-mono text-xs text-slate-600 dark:text-slate-300">
-                        ${c.pesel ? `PESEL: ${c.pesel}` : ''}
-                        ${c.nip ? `<div>NIP: ${c.nip}</div>` : ''}
-                    </td>
-                    <td class="p-3 text-xs font-mono text-slate-600 dark:text-slate-400">${c.docNumber || '-'}</td>
+                    <td class="p-3 font-mono text-xs text-slate-600 dark:text-slate-300">${c.pesel ? `PESEL: ${c.pesel}` : (c.nip ? `NIP: ${c.nip}` : '-')}</td>
+                    <td class="p-3 font-mono text-xs text-slate-600 dark:text-slate-400">${c.docNumber || '-'}</td>
                     <td class="p-3 text-xs text-slate-600 dark:text-slate-300">
                         <div>${c.phone || '-'}</div>
                         <div class="text-slate-400">${c.email || ''}</div>
                     </td>
                     <td class="p-3 text-xs text-slate-600 dark:text-slate-300 max-w-xs truncate">${c.address || '-'}</td>
-                    <td class="p-3 text-right">
-                        <button onclick="confirmDelete('customers', '${c.id}')" class="text-slate-400 hover:text-red-600 p-1"><i class="fa-solid fa-trash"></i></button>
+                    <td class="p-3 text-right space-x-1 whitespace-nowrap">
+                        <button onclick="assignTempPasswordForCustomer('${c.id}')" class="px-2.5 py-1 bg-amber-600 hover:bg-amber-700 text-white text-xs font-semibold rounded-lg shadow transition" title="Przypisz / Wygeneruj hasło tymczasowe"><i class="fa-solid fa-key mr-1"></i> Hasło</button>
+                        <button onclick="editCustomer('${c.id}')" class="text-slate-400 hover:text-brand-600 p-1" title="Edytuj"><i class="fa-solid fa-pen"></i></button>
+                        <button onclick="confirmDelete('customers', '${c.id}')" class="text-slate-400 hover:text-red-600 p-1" title="Usuń"><i class="fa-solid fa-trash"></i></button>
                     </td>
                 </tr>
             `).join('');
         }
 
-        function updateCustomerSelectOptions() {
-            const select = document.getElementById('op-customer-id');
-            select.innerHTML = `<option value="">-- Wybierz klienta z bazy --</option>` + 
-                customersData.map(c => `<option value="${c.id}">${c.firstName} ${c.lastName} ${c.companyName ? '('+c.companyName+')' : ''} - ${c.pesel || c.nip || c.phone || 'Brak ID'}</option>`).join('');
-        }
-
         // ================= USERS MANAGEMENT (ADMIN) =================
         function renderUsersTable() {
             const tbody = document.getElementById('table-users-body');
+            if (!tbody) return;
             if (usersData.length === 0) {
                 tbody.innerHTML = `<tr><td colspan="5" class="text-center p-6 text-slate-400">Brak użytkowników</td></tr>`;
                 return;
@@ -1458,8 +2164,9 @@
                         </span>
                     </td>
                     <td class="p-3 text-xs text-slate-500">${u.email || '-'}</td>
-                    <td class="p-3 text-right">
-                        <button onclick="confirmDelete('users', '${u.id}')" class="text-slate-400 hover:text-red-600 p-1"><i class="fa-solid fa-trash"></i></button>
+                    <td class="p-3 text-right space-x-1">
+                        <button onclick="editUser('${u.id}')" class="text-slate-400 hover:text-brand-600 p-1" title="Edytuj"><i class="fa-solid fa-pen"></i></button>
+                        <button onclick="confirmDelete('users', '${u.id}')" class="text-slate-400 hover:text-red-600 p-1" title="Usuń"><i class="fa-solid fa-trash"></i></button>
                     </td>
                 </tr>
             `).join('');
