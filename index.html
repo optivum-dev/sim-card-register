@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIM-Register Pro - System Rejestracji i Obsługi Kart SIM</title>
+    <title>System Rejestracji i Obsługi Kart SIM</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -51,20 +51,17 @@
                 </div>
             </div>
 
-            <!-- Status Bazy, Przełącznik Motywu & Zalogowany Użytkownik -->
             <div class="flex items-center space-x-3 sm:space-x-4">
                 <div id="db-status-badge" class="hidden md:flex items-center text-xs px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
                     <span class="w-2 h-2 rounded-full bg-yellow-500 mr-2 animate-pulse" id="db-status-dot"></span>
                     <span id="db-status-text">Sprawdzanie bazy...</span>
                 </div>
 
-                <!-- Przycisk Zmiany Motywu (Jasny / Ciemny) -->
                 <button id="theme-toggle-btn" onclick="toggleTheme()" title="Przełącz motyw" class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition">
                     <i id="theme-icon" class="fa-solid fa-moon text-sm"></i>
                 </button>
 
                 <div id="user-info-bar" class="hidden flex items-center space-x-3 pl-3 sm:pl-4 border-l border-slate-200 dark:border-slate-800">
-                    <!-- Klikalny blok profilu użytkownika -->
                     <div id="user-profile-trigger" onclick="openUserInfoModal()" class="text-right hidden sm:block cursor-pointer group" title="Kliknij, aby zobaczyć informacje o koncie i zmienić hasło">
                         <div id="user-display-name" class="text-sm font-semibold text-slate-800 dark:text-slate-200 group-hover:text-brand-500 transition"></div>
                         <div id="user-display-role" class="text-xs text-brand-600 dark:text-brand-400 uppercase font-medium"></div>
@@ -91,7 +88,6 @@
                     <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Wpisz login, email lub numer telefonu abonenta</p>
                 </div>
 
-                <!-- Formularz logowania -->
                 <form id="form-login" class="space-y-4">
                     <div>
                         <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase mb-1">Login / Email / Nr tel. abonenta</label>
@@ -115,14 +111,12 @@
                     </button>
                 </form>
 
-                <!-- Sekcja Weryfikacji Obecności Konta Administratora w Bazie Firestore -->
                 <div class="mt-8 pt-6 border-t border-slate-100 dark:border-slate-800">
                     <div id="admin-check-loading" class="text-center py-2 text-xs text-slate-400 flex items-center justify-center space-x-2">
                         <i class="fa-solid fa-circle-notch fa-spin"></i>
                         <span>Sprawdzanie obecności konta administratora w bazie danych...</span>
                     </div>
 
-                    <!-- Baner gdy brak admina w bazie -->
                     <div id="admin-missing-box" class="hidden bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-900/50 rounded-xl p-4 text-center">
                         <div class="text-amber-800 dark:text-amber-300 font-semibold text-sm mb-1 flex items-center justify-center space-x-1.5">
                             <i class="fa-solid fa-triangle-exclamation text-amber-600"></i>
@@ -134,7 +128,6 @@
                         </button>
                     </div>
 
-                    <!-- Baner gdy admin ISTNIEJE w bazie -->
                     <div id="admin-exists-box" class="hidden bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl p-3 text-center text-xs text-slate-500 dark:text-slate-400">
                         <i class="fa-solid fa-circle-check text-green-500 mr-1"></i>
                         System zainicjalizowany (konto administratora aktywne).
@@ -143,7 +136,7 @@
             </div>
         </div>
 
-        <!-- FORMULARZ INICJALIZACJI PIERWSZEGO ADMINA (MODAL) -->
+        <!-- MODAL: INICJALIZACJA ADMINA -->
         <div id="modal-init-admin" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
             <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl max-w-md w-full p-6 border border-slate-200 dark:border-slate-800 relative">
                 <button id="btn-close-init-modal" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
@@ -184,7 +177,7 @@
             </div>
         </div>
 
-        <!-- MODAL: DODAWANIE / EDYCJA DORADCY / PRACOWNIKA -->
+        <!-- MODAL: PRACOWNIK -->
         <div id="modal-add-user" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
             <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl max-w-md w-full p-6 border border-slate-200 dark:border-slate-800 relative">
                 <button id="btn-close-user-modal" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
@@ -232,7 +225,7 @@
             </div>
         </div>
 
-        <!-- ZMIANA HASŁA PIERWSZEGO LOGOWANIA (CERT POLSKA RULES) -->
+        <!-- MODAL: ZMIANA HASŁA CERT POLSKA -->
         <div id="modal-cert-password" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
             <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl max-w-md w-full p-6 border border-slate-200 dark:border-slate-800">
                 <div class="text-center mb-4">
@@ -253,7 +246,6 @@
                         <input type="password" id="cert-pass-2" required class="w-full px-3 py-2 text-sm bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-brand-500 outline-none text-slate-900 dark:text-slate-100">
                     </div>
 
-                    <!-- Checklist CERT -->
                     <div class="bg-slate-50 dark:bg-slate-950 p-3 rounded-lg border border-slate-200 dark:border-slate-800 text-xs space-y-1.5">
                         <p class="font-semibold text-slate-700 dark:text-slate-300">Wymogi bezpieczeństwa CERT Polska:</p>
                         <div id="rule-len" class="text-slate-400 flex items-center"><i class="fa-solid fa-circle text-[8px] mr-2"></i> Co najmniej 12 znaków</div>
@@ -270,7 +262,7 @@
             </div>
         </div>
 
-        <!-- MODAL: INFORMACJE O UŻYTKOWNIKU & ZARZĄDZANIE HASŁEM -->
+        <!-- MODAL: INFORMACJE O UŻYTKOWNIKU & ZMIANA HASŁA -->
         <div id="modal-user-info" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto">
             <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl max-w-md w-full p-6 border border-slate-200 dark:border-slate-800 relative my-6">
                 <button onclick="closeUserInfoModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
@@ -300,7 +292,6 @@
                         <button type="button" onclick="switchPasswordTab('restart')" id="btn-tab-restart" class="flex-1 py-1.5 px-2 bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-semibold rounded-lg transition">Restart hasła</button>
                     </div>
 
-                    <!-- OPCJA 1: Zmiana hasła -->
                     <form id="form-user-change-pass" class="space-y-3 pt-2">
                         <div>
                             <label class="block text-[11px] font-semibold text-slate-700 dark:text-slate-300 uppercase mb-1">Obecne hasło</label>
@@ -317,7 +308,6 @@
                         <button type="submit" id="btn-submit-change" disabled class="w-full py-2 bg-slate-300 dark:bg-slate-800 text-slate-500 font-semibold text-xs rounded-lg transition cursor-not-allowed">Zmień hasło</button>
                     </form>
 
-                    <!-- OPCJA 2: Restart hasła -->
                     <form id="form-user-restart-pass" class="space-y-3 pt-2 hidden">
                         <div>
                             <label class="block text-[11px] font-semibold text-slate-700 dark:text-slate-300 uppercase mb-1">Nowe hasło</label>
@@ -333,7 +323,7 @@
             </div>
         </div>
 
-        <!-- PŁYWAJĄCE OKIENKO ODLICZANIA DO WYLOGOWANIA -->
+        <!-- MODAL ODLICZANIA DO WYLOGOWANIA -->
         <div id="modal-logout-countdown" class="hidden fixed inset-0 bg-slate-900/70 backdrop-blur-md z-50 flex items-center justify-center p-4">
             <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl max-w-sm w-full p-6 text-center border border-slate-200 dark:border-slate-800 space-y-4">
                 <div class="w-14 h-14 bg-amber-100 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 rounded-2xl mx-auto flex items-center justify-center text-2xl animate-pulse">
@@ -350,7 +340,7 @@
         <!-- GLÓWNY PANEL PO ZALOGOWANIU -->
         <div id="app-dashboard" class="hidden space-y-6">
 
-            <!-- Zakładki Nawigacyjne (Admin / Doradca) - BEZ OPCJI SKŁADANIA WNIOSKÓW -->
+            <!-- Zakładki Nawigacyjne (Admin / Doradca) -->
             <div id="nav-tabs-staff" class="flex flex-wrap items-center justify-between gap-4 bg-white dark:bg-slate-900 p-2 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm transition-colors duration-200">
                 <div class="flex flex-wrap space-x-1 sm:space-x-2 gap-y-1">
                     <button data-tab="tab-sim-reg" class="tab-btn px-4 py-2 text-sm font-medium rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition active-tab bg-slate-200 dark:bg-slate-800 text-slate-900 dark:text-white">
@@ -395,13 +385,13 @@
                 </div>
             </div>
 
-            <!-- ZAKŁADKA 1: REJESTRACJA KARTY NUMERU -->
+            <!-- ZAKŁADKA: REJESTRACJA KARTY -->
             <div id="tab-sim-reg" class="tab-content staff-content space-y-4">
                 <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden p-4 sm:p-6 transition-colors duration-200">
                     <div class="flex justify-between items-center mb-4">
                         <div>
                             <h3 class="font-bold text-slate-900 dark:text-white text-lg">Rejestracja Karty SIM (Nowy Numer)</h3>
-                            <p class="text-xs text-slate-500 dark:text-slate-400">Wszystkie sieci MNO oraz submarki / MVNO</p>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">Wszystkie sieci MNO oraz submarki / MVNO z oficjalnymi logotypami</p>
                         </div>
                         <button onclick="openOperationModal('Rejestracja Nowego Numeru')" class="px-3 py-2 bg-brand-500 hover:bg-brand-600 text-white text-xs font-semibold rounded-xl transition">
                             <i class="fa-solid fa-plus mr-1"></i> Zarejestruj Nowy Numer
@@ -427,7 +417,7 @@
                 </div>
             </div>
 
-            <!-- ZAKŁADKA: WNIOSKI SYSTEMOWE (Dla Admina / Doradcy - Realne sprawdzanie i akceptacja/odrzucenie) -->
+            <!-- ZAKŁADKA: WNIOSKI SYSTEMOWE -->
             <div id="tab-system-requests" class="tab-content staff-content hidden space-y-4">
                 <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-4 sm:p-6 transition-colors duration-200">
                     <div class="flex justify-between items-center mb-4">
@@ -457,7 +447,7 @@
                 </div>
             </div>
 
-            <!-- ZAKŁADKA: NUMERY TELEFONÓW W BAZIE -->
+            <!-- ZAKŁADKA: NUMERY TELEFONÓW -->
             <div id="tab-phone-numbers" class="tab-content staff-content hidden space-y-4">
                 <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-4 sm:p-6 transition-colors duration-200">
                     <div class="flex justify-between items-center mb-4">
@@ -474,7 +464,7 @@
                             <thead class="bg-slate-100 dark:bg-slate-800/80 text-slate-600 dark:text-slate-300 uppercase text-[11px] font-semibold">
                                 <tr>
                                     <th class="p-3">Numer (MSISDN)</th>
-                                    <th class="p-3">Operator</th>
+                                    <th class="p-3">Operator / Sieć</th>
                                     <th class="p-3">Status</th>
                                     <th class="p-3">Notatki</th>
                                     <th class="p-3 text-right">Akcje</th>
@@ -488,7 +478,7 @@
                 </div>
             </div>
 
-            <!-- ZAKŁADKA 2: PRZENOSZENIE NUMERU (MNP) -->
+            <!-- ZAKŁADKA: MNP -->
             <div id="tab-mnp" class="tab-content staff-content hidden space-y-4">
                 <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden p-4 sm:p-6 transition-colors duration-200">
                     <div class="flex justify-between items-center mb-4">
@@ -520,7 +510,7 @@
                 </div>
             </div>
 
-            <!-- ZAKŁADKA 3: CESJA NUMERU & ABONAMENT -->
+            <!-- ZAKŁADKA: CESJA -->
             <div id="tab-cesja" class="tab-content staff-content hidden space-y-4">
                 <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden p-4 sm:p-6 transition-colors duration-200">
                     <div class="flex justify-between items-center mb-4">
@@ -557,7 +547,7 @@
                 </div>
             </div>
 
-            <!-- ZAKŁADKA 4: KLIENCI -->
+            <!-- ZAKŁADKA: KLIENCI -->
             <div id="tab-customers" class="tab-content staff-content hidden space-y-4">
                 <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-4 sm:p-6 transition-colors duration-200">
                     <div class="flex justify-between items-center mb-4">
@@ -589,7 +579,7 @@
                 </div>
             </div>
 
-            <!-- ZAKŁADKA 5: PRACOWNICY -->
+            <!-- ZAKŁADKA: PRACOWNICY -->
             <div id="tab-users" class="tab-content staff-content hidden space-y-4">
                 <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-4 sm:p-6 transition-colors duration-200">
                     <div class="flex justify-between items-center mb-4">
@@ -651,7 +641,7 @@
                 </div>
             </div>
 
-            <!-- ZAKŁADKA ABONENTA: ZŁÓŻ NOWY WNIOSEK -->
+            <!-- ZAKŁADKA ABONENTA: ZŁÓŻ WNIOSEK -->
             <div id="tab-sub-new-request" class="tab-content sub-content hidden space-y-4">
                 <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-6 sm:p-8 max-w-2xl mx-auto transition-colors duration-200">
                     <div class="mb-5 pb-3 border-b border-slate-100 dark:border-slate-800">
@@ -715,7 +705,7 @@
         </div>
     </main>
 
-    <!-- MODAL: NOWY / EDYCJA NUMER TELEFONU -->
+    <!-- MODAL: NUMER TELEFONU -->
     <div id="modal-phone" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto">
         <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl max-w-lg w-full p-6 border border-slate-200 dark:border-slate-800 my-8">
             <div class="flex justify-between items-center pb-3 border-b border-slate-200 dark:border-slate-800 mb-4">
@@ -734,10 +724,10 @@
                 <div>
                     <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase mb-1">Operator *</label>
                     <select id="phone-operator" class="w-full px-3 py-2 text-sm bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl outline-none text-slate-900 dark:text-slate-100">
-                        <option value="PLAY">PLAY</option>
-                        <option value="Plus">Plus</option>
-                        <option value="Orange">Orange</option>
-                        <option value="T-Mobile">T-Mobile</option>
+                        <option value="PLAY">PLAY (oraz Virgin / Red Bull)</option>
+                        <option value="Plus">Plus (oraz Plush / Klucz)</option>
+                        <option value="Orange">Orange (oraz Nju)</option>
+                        <option value="T-Mobile">T-Mobile (oraz Heyah / Vikings)</option>
                     </select>
                 </div>
                 <div>
@@ -760,7 +750,7 @@
         </div>
     </div>
 
-    <!-- MODAL: NOWA / EDYCJA OPERACJA SIM -->
+    <!-- MODAL: OPERACJA SIM -->
     <div id="modal-op" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto">
         <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl max-w-2xl w-full p-6 border border-slate-200 dark:border-slate-800 my-8">
             <div class="flex justify-between items-center pb-4 border-b border-slate-200 dark:border-slate-800 mb-4">
@@ -816,7 +806,12 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                         <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase mb-1">Numer Telefonu (MSISDN) *</label>
-                        <input type="text" id="op-msisdn" required placeholder="np. 500600700" class="w-full px-3 py-2 text-sm bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-brand-500 outline-none text-slate-900 dark:text-slate-100">
+                        <div class="flex items-center space-x-2">
+                            <input type="text" id="op-msisdn" required placeholder="Wybierz z bazy numerów..." readonly onclick="openPhonePickerModal()" class="w-full px-3 py-2 text-sm bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-brand-500 outline-none text-slate-900 dark:text-slate-100 cursor-pointer">
+                            <button type="button" onclick="openPhonePickerModal()" class="px-3 py-2 bg-brand-500 hover:bg-brand-600 text-white text-xs font-semibold rounded-xl transition whitespace-nowrap shadow" title="Wybierz numer z bazy">
+                                <i class="fa-solid fa-phone mr-1"></i> Wybierz numer
+                            </button>
+                        </div>
                     </div>
                     <div>
                         <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase mb-1">Numer Karty SIM (ICCID)</label>
@@ -848,7 +843,54 @@
         </div>
     </div>
 
-    <!-- MODAL: WYBÓR KLIENTA Z BAZY (PŁYWAJĄCE OKIENKO) -->
+    <!-- MODAL: WYBÓR NUMERU Z BAZY (WYSZUKIWARKA I FILTRY) -->
+    <div id="modal-phone-picker" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl max-w-2xl w-full p-6 border border-slate-200 dark:border-slate-800 my-8">
+            <div class="flex justify-between items-center pb-3 border-b border-slate-200 dark:border-slate-800 mb-4">
+                <div>
+                    <h3 class="text-lg font-bold text-slate-900 dark:text-white">Wybierz numer z bazy systemowej</h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">Wyszukaj i wybierz dostępny numer telefonu</p>
+                </div>
+                <button onclick="closePhonePickerModal()" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-2">
+                    <i class="fa-solid fa-xmark text-xl"></i>
+                </button>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
+                <div class="relative">
+                    <i class="fa-solid fa-search absolute left-3 top-3 text-slate-400 text-xs"></i>
+                    <input type="text" id="phone-search-input" oninput="renderPhonePickerTable()" placeholder="Szukaj numeru lub notatki..." class="w-full pl-9 pr-3 py-2 text-xs bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl outline-none text-slate-900 dark:text-slate-100">
+                </div>
+                <div>
+                    <select id="phone-filter-operator" onchange="renderPhonePickerTable()" class="w-full px-3 py-2 text-xs bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl outline-none text-slate-900 dark:text-slate-100">
+                        <option value="">Wszyscy operatori (sieci)</option>
+                        <option value="PLAY">PLAY</option>
+                        <option value="Plus">Plus</option>
+                        <option value="Orange">Orange</option>
+                        <option value="T-Mobile">T-Mobile</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="overflow-x-auto max-h-80">
+                <table class="w-full text-left text-sm">
+                    <thead class="bg-slate-100 dark:bg-slate-800/80 text-slate-600 dark:text-slate-300 uppercase text-[11px] font-semibold sticky top-0">
+                        <tr>
+                            <th class="p-3">Numer (MSISDN)</th>
+                            <th class="p-3">Operator</th>
+                            <th class="p-3">Status</th>
+                            <th class="p-3 text-right">Wybierz</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-phone-picker-body" class="divide-y divide-slate-100 dark:divide-slate-800">
+                        <tr><td colspan="4" class="text-center p-6 text-slate-400">Ładowanie numerów...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: WYBÓR KLIENTA -->
     <div id="modal-customer-picker" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto">
         <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl max-w-3xl w-full p-6 border border-slate-200 dark:border-slate-800 my-8">
             <div class="flex justify-between items-center pb-3 border-b border-slate-200 dark:border-slate-800 mb-4">
@@ -884,7 +926,7 @@
         </div>
     </div>
 
-    <!-- MODAL: NOWY / EDYCJA KLIENTA -->
+    <!-- MODAL: KLIENT -->
     <div id="modal-customer" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto">
         <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl max-w-xl w-full p-6 border border-slate-200 dark:border-slate-800 my-8">
             <div class="flex justify-between items-center pb-3 border-b border-slate-200 dark:border-slate-800 mb-4">
@@ -966,7 +1008,7 @@
         </div>
     </div>
 
-    <!-- MODAL: POTWIERDZENIE USUNIĘCIA -->
+    <!-- MODAL: USUŃ -->
     <div id="modal-confirm-delete" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
         <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl max-w-sm w-full p-6 text-center border border-slate-200 dark:border-slate-800">
             <div class="w-12 h-12 bg-red-100 dark:bg-red-950 text-red-600 dark:text-red-400 rounded-full mx-auto flex items-center justify-center text-xl mb-3">
@@ -1025,6 +1067,45 @@
             'T-Mobile': ['T-Mobile', 'Heyah', 'Mobile Vikings']
         };
 
+        // Prawdziwe logotypy operatorów w formacie SVG ze znakami graficznymi i dedykowanymi kolorami korporacyjnymi
+        function getOperatorBadgeHTML(opName) {
+            if (!opName) return `<span class="px-2 py-0.5 rounded text-xs font-semibold bg-slate-100 text-slate-700">-</span>`;
+            
+            const upper = opName.toUpperCase();
+            
+            if (upper.includes('PLAY') || upper.includes('VIRGIN') || upper.includes('RED BULL')) {
+                return `
+                    <span class="inline-flex items-center space-x-1.5 px-2.5 py-1 rounded-md text-xs font-bold bg-[#6000ff]/10 dark:bg-[#6000ff]/20 text-[#6000ff] dark:text-[#b580ff] border border-[#6000ff]/30 shadow-sm">
+                        <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>
+                        <span>${opName}</span>
+                    </span>
+                `;
+            } else if (upper.includes('PLUS') || upper.includes('PLUSH') || upper.includes('KLUCZ')) {
+                return `
+                    <span class="inline-flex items-center space-x-1.5 px-2.5 py-1 rounded-md text-xs font-bold bg-[#00b050]/10 dark:bg-[#00b050]/20 text-[#008f40] dark:text-[#4cd988] border border-[#00b050]/30 shadow-sm">
+                        <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M12 2L2 22h20L12 2zm0 3.84L18.16 20H5.84L12 5.84z"/></svg>
+                        <span>${opName}</span>
+                    </span>
+                `;
+            } else if (upper.includes('ORANGE') || upper.includes('NJU')) {
+                return `
+                    <span class="inline-flex items-center space-x-1.5 px-2.5 py-1 rounded-md text-xs font-bold bg-[#ff6600]/10 dark:bg-[#ff6600]/20 text-[#e65c00] dark:text-[#ff944d] border border-[#ff6600]/30 shadow-sm">
+                        <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg>
+                        <span>${opName}</span>
+                    </span>
+                `;
+            } else if (upper.includes('T-MOBILE') || upper.includes('HEYAH') || upper.includes('VIKINGS')) {
+                return `
+                    <span class="inline-flex items-center space-x-1.5 px-2.5 py-1 rounded-md text-xs font-bold bg-[#e20074]/10 dark:bg-[#e20074]/20 text-[#c20063] dark:text-[#ff4da6] border border-[#e20074]/30 shadow-sm">
+                        <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
+                        <span>${opName}</span>
+                    </span>
+                `;
+            }
+
+            return `<span class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-semibold bg-slate-100 text-slate-700 border border-slate-300">${opName}</span>`;
+        }
+
         let operationsData = [];
         let customersData = [];
         let usersData = [];
@@ -1066,7 +1147,6 @@
             setTimeout(() => { toast.classList.add('hidden'); }, 3500);
         }
 
-        // ================= THEME =================
         window.toggleTheme = async function() {
             const isDark = document.documentElement.classList.contains('dark');
             const newTheme = isDark ? 'light' : 'dark';
@@ -1100,7 +1180,6 @@
             applyTheme(savedTheme);
         }
 
-        // ================= INIT & ADMIN CHECK =================
         async function initApp() {
             initTheme();
             try {
@@ -1142,7 +1221,6 @@
             }
         }
 
-        // ================= REALTIME LISTENERS =================
         function setupDataListeners() {
             onSnapshot(getPublicCollPath('sim_operations'), (snapshot) => {
                 operationsData = [];
@@ -1169,6 +1247,7 @@
                     phoneNumbersData.push({ id: docSnap.id, ...docSnap.data() });
                 });
                 renderPhonesTable();
+                renderPhonePickerTable();
             });
 
             onSnapshot(getPublicCollPath('users'), (snapshot) => {
@@ -1181,7 +1260,6 @@
             });
         }
 
-        // ================= USER INFO MODAL & PASSWORD MANAGEMENT =================
         window.openUserInfoModal = function() {
             if (!currentUser) return;
             document.getElementById('info-modal-name').textContent = currentUser.name || currentUser.login || 'Brak imienia';
@@ -1256,7 +1334,6 @@
         document.getElementById('form-user-change-pass').addEventListener('submit', async (e) => {
             e.preventDefault();
             if (!currentUser) return;
-
             const currentPassInput = document.getElementById('ch-current-pass').value;
             const newPass = document.getElementById('ch-pass-1').value;
 
@@ -1317,7 +1394,6 @@
             }
         });
 
-        // ================= AUTHENTICATION =================
         document.getElementById('form-login').addEventListener('submit', async (e) => {
             e.preventDefault();
             const login = document.getElementById('login-input').value.trim();
@@ -1350,10 +1426,7 @@
                 }
 
                 currentUser = foundUser;
-
-                if (currentUser.theme) {
-                    applyTheme(currentUser.theme);
-                }
+                if (currentUser.theme) applyTheme(currentUser.theme);
 
                 if (currentUser.mustChangePassword) {
                     openCertPasswordModal();
@@ -1361,7 +1434,6 @@
                 }
 
                 loginSuccess();
-
             } catch (err) {
                 showToast("Błąd logowania: " + err.message, "error");
             }
@@ -1388,11 +1460,8 @@
             } else {
                 navSub.classList.add('hidden');
                 navStaff.classList.remove('hidden');
-                if (currentUser.role === 'admin') {
-                    tabBtnUsers.classList.remove('hidden');
-                } else {
-                    tabBtnUsers.classList.add('hidden');
-                }
+                if (currentUser.role === 'admin') tabBtnUsers.classList.remove('hidden');
+                else tabBtnUsers.classList.add('hidden');
             }
 
             setupDataListeners();
@@ -1410,13 +1479,8 @@
         }
         document.getElementById('btn-logout').addEventListener('click', logout);
 
-        // ================= ADMIN INITIALIZATION =================
-        document.getElementById('btn-show-init-admin').addEventListener('click', () => {
-            modalInitAdmin.classList.remove('hidden');
-        });
-        document.getElementById('btn-close-init-modal').addEventListener('click', () => {
-            modalInitAdmin.classList.add('hidden');
-        });
+        document.getElementById('btn-show-init-admin').addEventListener('click', () => modalInitAdmin.classList.remove('hidden'));
+        document.getElementById('btn-close-init-modal').addEventListener('click', () => modalInitAdmin.classList.add('hidden'));
 
         document.getElementById('form-init-admin').addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -1449,7 +1513,6 @@
             }
         });
 
-        // ================= ADD / EDIT USERS (STAFF) =================
         const modalAddUser = document.getElementById('modal-add-user');
         document.getElementById('btn-add-user-modal').addEventListener('click', () => {
             document.getElementById('form-add-user').reset();
@@ -1498,7 +1561,6 @@
             }
         });
 
-        // ================= CERT POLSKA PASSWORD MODAL =================
         const modalCertPass = document.getElementById('modal-cert-password');
         const certPass1 = document.getElementById('cert-pass-1');
         const certPass2 = document.getElementById('cert-pass-2');
@@ -1539,11 +1601,8 @@
 
         function updateRuleUI(elemId, isValid) {
             const elem = document.getElementById(elemId);
-            if (isValid) {
-                elem.className = "text-green-600 dark:text-green-400 font-medium flex items-center";
-            } else {
-                elem.className = "text-slate-400 flex items-center";
-            }
+            if (isValid) elem.className = "text-green-600 dark:text-green-400 font-medium flex items-center";
+            else elem.className = "text-slate-400 flex items-center";
         }
 
         certPass1.addEventListener('input', validateCertRules);
@@ -1570,7 +1629,6 @@
             }
         });
 
-        // ================= TAB SWITCHING =================
         document.querySelectorAll('.tab-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 const target = btn.getAttribute('data-tab');
@@ -1586,7 +1644,6 @@
             });
         });
 
-        // Subscriber sub-tabs switching
         window.switchSubTab = function(targetId) {
             document.querySelectorAll('.tab-btn-sub').forEach(b => {
                 b.classList.remove('bg-slate-200', 'dark:bg-slate-800', 'text-slate-900', 'dark:text-white');
@@ -1598,7 +1655,6 @@
             document.getElementById(targetId).classList.remove('hidden');
         };
 
-        // ================= SYSTEM REQUESTS MANAGEMENT (STAFF - REAL CHECK) =================
         window.acceptSystemRequest = async function(id) {
             try {
                 await updateDoc(getPublicDocPath('sim_operations', id), { status: 'Zarejestrowana' });
@@ -1635,7 +1691,7 @@
                         <td class="p-3 text-xs font-mono text-slate-500">${dateStr}</td>
                         <td class="p-3 font-semibold text-slate-900 dark:text-white">${item.customerName || '-'}</td>
                         <td class="p-3 text-xs font-medium text-slate-700 dark:text-slate-300">${item.type}</td>
-                        <td class="p-3"><span class="px-2 py-0.5 rounded text-xs font-semibold bg-brand-50 dark:bg-brand-950/50 text-brand-700 dark:text-brand-300 border border-brand-200">${item.subOperator || item.mainOperator}</span></td>
+                        <td class="p-3">${getOperatorBadgeHTML(item.subOperator || item.mainOperator)}</td>
                         <td class="p-3 font-mono text-xs font-bold">${item.msisdn}</td>
                         <td class="p-3 text-xs">
                             <span class="px-2 py-1 rounded-full font-medium bg-amber-100 text-amber-700 dark:bg-amber-950/50 dark:text-amber-300">
@@ -1651,7 +1707,6 @@
             }).join('');
         }
 
-        // ================= SUBSCRIBER REQUESTS =================
         const subMainOp = document.getElementById('sub-req-main-op');
         const subSubOp = document.getElementById('sub-req-sub-op');
 
@@ -1715,7 +1770,7 @@
                     <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition">
                         <td class="p-3 text-xs font-mono text-slate-500">${dateStr}</td>
                         <td class="p-3 font-semibold text-slate-900 dark:text-white">${item.type}</td>
-                        <td class="p-3"><span class="px-2 py-0.5 rounded text-xs font-semibold bg-brand-50 dark:bg-brand-950/50 text-brand-700 dark:text-brand-300 border border-brand-200">${item.subOperator || item.mainOperator}</span></td>
+                        <td class="p-3">${getOperatorBadgeHTML(item.subOperator || item.mainOperator)}</td>
                         <td class="p-3 font-mono text-xs font-bold">${item.msisdn}</td>
                         <td class="p-3 text-xs"><span class="px-2 py-1 rounded-full font-medium ${item.status === 'Zarejestrowana' ? 'bg-green-100 text-green-700 dark:bg-green-950/50 dark:text-green-300' : (item.status === 'Odrzucona' ? 'bg-red-100 text-red-700 dark:bg-red-950/50 dark:text-red-300' : 'bg-amber-100 text-amber-700 dark:bg-amber-950/50 dark:text-amber-300')}">${item.status}</span></td>
                     </tr>
@@ -1723,7 +1778,6 @@
             }).join('');
         }
 
-        // ================= PHONE NUMBERS MANAGEMENT =================
         const modalPhone = document.getElementById('modal-phone');
 
         window.openPhoneModal = (id = null) => {
@@ -1783,7 +1837,7 @@
             tbody.innerHTML = phoneNumbersData.map(p => `
                 <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition">
                     <td class="p-3 font-mono font-bold text-slate-900 dark:text-white">${p.msisdn}</td>
-                    <td class="p-3"><span class="px-2 py-0.5 rounded text-xs font-semibold bg-brand-50 dark:bg-brand-950/50 text-brand-700 dark:text-brand-300 border border-brand-200">${p.operator}</span></td>
+                    <td class="p-3">${getOperatorBadgeHTML(p.operator)}</td>
                     <td class="p-3 text-xs"><span class="px-2 py-1 rounded-full font-medium ${p.status === 'Wolny' ? 'bg-green-100 text-green-700 dark:bg-green-950/50 dark:text-green-300' : (p.status === 'Przypisany' ? 'bg-blue-100 text-blue-700 dark:bg-blue-950/50 dark:text-blue-300' : 'bg-red-100 text-red-700 dark:bg-red-950/50 dark:text-red-300')}">${p.status}</span></td>
                     <td class="p-3 text-xs text-slate-600 dark:text-slate-300">${p.notes || '-'}</td>
                     <td class="p-3 text-right space-x-1">
@@ -1794,7 +1848,61 @@
             `).join('');
         }
 
-        // ================= OPERATIONS / SIM REGISTRATION =================
+        const modalPhonePicker = document.getElementById('modal-phone-picker');
+
+        window.openPhonePickerModal = function() {
+            document.getElementById('phone-search-input').value = '';
+            document.getElementById('phone-filter-operator').value = '';
+            renderPhonePickerTable();
+            modalPhonePicker.classList.remove('hidden');
+        };
+
+        window.closePhonePickerModal = function() {
+            modalPhonePicker.classList.add('hidden');
+        };
+
+        window.selectPhoneForOp = function(msisdn, operator) {
+            document.getElementById('op-msisdn').value = msisdn;
+            if (operator && subOperatorsMap[operator]) {
+                document.getElementById('op-main-operator').value = operator;
+                updateSubOperators();
+            }
+            closePhonePickerModal();
+            showToast(`Wybrano numer telefonu: ${msisdn}`, "success");
+        };
+
+        function renderPhonePickerTable() {
+            const tbody = document.getElementById('table-phone-picker-body');
+            if (!tbody) return;
+
+            const searchVal = document.getElementById('phone-search-input').value.toLowerCase();
+            const filterOp = document.getElementById('phone-filter-operator').value;
+
+            const filtered = phoneNumbersData.filter(p => {
+                const matchSearch = p.msisdn.toLowerCase().includes(searchVal) || (p.notes && p.notes.toLowerCase().includes(searchVal));
+                const matchOp = !filterOp || p.operator === filterOp;
+                return matchSearch && matchOp;
+            });
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="4" class="text-center p-6 text-slate-400">Brak numerów pasujących do kryteriów wyszukiwania</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = filtered.map(p => `
+                <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition">
+                    <td class="p-3 font-mono font-bold text-slate-900 dark:text-white">${p.msisdn}</td>
+                    <td class="p-3">${getOperatorBadgeHTML(p.operator)}</td>
+                    <td class="p-3 text-xs"><span class="px-2 py-1 rounded-full font-medium ${p.status === 'Wolny' ? 'bg-green-100 text-green-700 dark:bg-green-950/50 dark:text-green-300' : 'bg-slate-100 text-slate-600'}">${p.status}</span></td>
+                    <td class="p-3 text-right">
+                        <button type="button" onclick="selectPhoneForOp('${p.msisdn}', '${p.operator}')" class="px-3 py-1 bg-brand-500 hover:bg-brand-600 text-white text-xs font-semibold rounded-lg shadow transition">
+                            <i class="fa-solid fa-check mr-1"></i> Wybierz
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
         const modalOp = document.getElementById('modal-op');
         const mainOpSelect = document.getElementById('op-main-operator');
         const subOpSelect = document.getElementById('op-sub-operator');
@@ -1888,7 +1996,7 @@
                     <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition">
                         <td class="p-3 text-xs font-mono text-slate-500">${dateStr}</td>
                         <td class="p-3 font-semibold text-slate-900 dark:text-white">${item.customerName}</td>
-                        <td class="p-3"><span class="px-2 py-0.5 rounded text-xs font-semibold bg-brand-50 dark:bg-brand-950/50 text-brand-700 dark:text-brand-300 border border-brand-200">${item.subOperator || item.mainOperator}</span></td>
+                        <td class="p-3">${getOperatorBadgeHTML(item.subOperator || item.mainOperator)}</td>
                         <td class="p-3 font-mono text-xs">
                             <div class="font-bold">${item.msisdn}</div>
                             <div class="text-slate-400 text-[10px]">${item.iccid || item.type}</div>
@@ -1923,7 +2031,6 @@
             modalOp.classList.remove('hidden');
         };
 
-        // ================= CUSTOMER PICKER MODAL =================
         const modalCustomerPicker = document.getElementById('modal-customer-picker');
 
         window.openCustomerPickerModal = function() {
@@ -1978,7 +2085,6 @@
             modalCustomer.classList.remove('hidden');
         }
 
-        // ================= CUSTOMERS MANAGEMENT (CRUD) =================
         const modalCustomer = document.getElementById('modal-customer');
 
         document.getElementById('btn-add-customer-modal').addEventListener('click', () => {
@@ -2025,7 +2131,6 @@
             modalCustomer.classList.remove('hidden');
         };
 
-        // Funkcja przypisania/generowania hasła tymczasowego dla klienta z poziomu tabeli klientów
         window.assignTempPasswordForCustomer = async function(customerId) {
             const customer = customersData.find(c => c.id === customerId);
             if (!customer || !customer.phone) {
@@ -2145,7 +2250,6 @@
             `).join('');
         }
 
-        // ================= USERS MANAGEMENT (ADMIN) =================
         function renderUsersTable() {
             const tbody = document.getElementById('table-users-body');
             if (!tbody) return;
@@ -2172,7 +2276,6 @@
             `).join('');
         }
 
-        // ================= DELETE CONFIRMATION =================
         const modalConfirmDelete = document.getElementById('modal-confirm-delete');
         window.confirmDelete = (coll, id) => {
             deleteTarget = { coll, id };
@@ -2196,7 +2299,6 @@
             }
         });
 
-        // Initialize App on Load
         window.addEventListener('DOMContentLoaded', initApp);
     </script>
 </body>
